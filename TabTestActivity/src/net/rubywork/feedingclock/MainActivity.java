@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	private static final String [] TAB_TAGs = {"Tab1", "Tab2", "Tab3", "Tab4"};
@@ -26,9 +27,9 @@ public class MainActivity extends Activity {
 		View feedingMainView = findViewById(R.id.feedingMainView);
 		View feedingStatusView = findViewById(R.id.feedingStatusView);
 		Chronometer chronometer = (Chronometer)findViewById(R.id.chronometer);
-
-		new FeedingMainOnClickListener(feedingMainView, feedingStatusView, chronometer, (Button) findViewById(R.id.leftBreastButton), (Button) findViewById(R.id.bottleButton), (Button) findViewById(R.id.rightBreastButton));
-		new FeedingStatusOnClickListener(feedingMainView, feedingStatusView, chronometer, (Button) findViewById(R.id.pauseResumeButton), (Button) findViewById(R.id.changeButton), (Button) findViewById(R.id.stopButton));
+		
+		new FeedingMainOnClickListener(feedingMainView, feedingStatusView, chronometer, (TextView) findViewById(R.id.leftTextView), (TextView) findViewById(R.id.rightTextView), (Button) findViewById(R.id.leftBreastButton), (Button) findViewById(R.id.bottleButton), (Button) findViewById(R.id.rightBreastButton));
+		new FeedingStatusOnClickListener(feedingMainView, feedingStatusView, chronometer, (TextView) findViewById(R.id.leftTextView), (TextView) findViewById(R.id.rightTextView), (Button) findViewById(R.id.pauseResumeButton), (Button) findViewById(R.id.changeButton), (Button) findViewById(R.id.stopButton));
 		
 		initTab();
 	}

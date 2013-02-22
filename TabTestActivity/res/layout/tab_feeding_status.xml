@@ -13,7 +13,8 @@
             android:layout_height="100dp"
             android:background="#FFA07A" >
 
-            <TextView
+            <TextView                
+                android:id="@+id/leftTextView"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -29,6 +30,7 @@
                 android:textSize="60sp" />
 
             <TextView
+                android:id="@+id/rightTextView"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
