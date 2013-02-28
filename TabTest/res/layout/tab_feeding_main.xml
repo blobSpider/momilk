@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <LinearLayout
+        android:id="@+id/feedingMainView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="left|center"
+                android:text="최근 수유"
+                android:textColor="#000000"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/xxxxxxxxTextView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="5"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/whereBreastTextView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="5"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/cuTimeMainTextView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="3"
+                android:paddingLeft="10dp"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/timeRecordTextView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="7"
+                android:gravity="right"
+                android:paddingRight="10dp"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/leftBreastButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Left" />
+
+            <Button
+                android:id="@+id/bottleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bottle" />
+
+            <Button
+                android:id="@+id/rightBreastButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Right" />
+        </LinearLayout>
+    </LinearLayout>
+
+</merge>
