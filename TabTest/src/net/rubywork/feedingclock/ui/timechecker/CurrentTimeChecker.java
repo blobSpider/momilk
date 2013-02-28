@@ -2,7 +2,7 @@ package net.rubywork.feedingclock.ui.timechecker;
 
 import java.util.Calendar;
 
-public class currentTimeChecker {
+public class CurrentTimeChecker {
 	private Calendar calendar;
 
 	public int getYear(){
@@ -33,5 +33,9 @@ public class currentTimeChecker {
 	public int getAmPm(){
 		calendar = Calendar.getInstance();
 		return calendar.get(Calendar.AM_PM);
+	}
+	
+	public String getAmPmString(){
+		return this.getAmPm() == 0 ? "AM" : "PM";
 	}
 }

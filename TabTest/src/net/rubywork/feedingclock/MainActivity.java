@@ -1,15 +1,15 @@
 package net.rubywork.feedingclock;
 
-import net.rubywork.feedingclock.ui.listener.FeedingMainOnClickListener;
-import net.rubywork.feedingclock.ui.listener.FeedingStatusOnClickListener;
+import net.rubywork.feedingclock.ui.listener.BottleButtonOnClickListener;
+import net.rubywork.feedingclock.ui.listener.ChangeButtonOnClickListener;
+import net.rubywork.feedingclock.ui.listener.LeftButtonOnClickListener;
+import net.rubywork.feedingclock.ui.listener.PauseButtonOnClickListener;
+import net.rubywork.feedingclock.ui.listener.RightButtonOnClickListener;
+import net.rubywork.feedingclock.ui.listener.StopButtonOnClickListener;
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	private static final String [] TAB_TAGs = {"Tab1", "Tab2", "Tab3", "Tab4"};
@@ -26,12 +26,13 @@ public class MainActivity extends Activity {
 	}
 	
 	private void initView(){
-		View feedingMainView = findViewById(R.id.feedingMainView);
-		View feedingStatusView = findViewById(R.id.feedingStatusView);
-		Chronometer chronometer = (Chronometer)findViewById(R.id.chronometer);
-		
-		new FeedingMainOnClickListener(feedingMainView, feedingStatusView, chronometer, (TextView) findViewById(R.id.leftTextView), (TextView) findViewById(R.id.rightTextView), (TextView) findViewById(R.id.cuTimeMainTextView),  (Button) findViewById(R.id.leftBreastButton), (Button) findViewById(R.id.bottleButton), (Button) findViewById(R.id.rightBreastButton));
-		new FeedingStatusOnClickListener(feedingMainView, feedingStatusView, chronometer, (TextView) findViewById(R.id.leftTextView), (TextView) findViewById(R.id.rightTextView), (TextView) findViewById(R.id.cuTimeTextView), (TextView) findViewById(R.id.timeRecordTextView), (TextView) findViewById(R.id.whereBreastTextView), (Button) findViewById(R.id.pauseResumeButton), (Button) findViewById(R.id.changeButton), (Button) findViewById(R.id.stopButton));
+		new LeftButtonOnClickListener(this);
+		new RightButtonOnClickListener(this);
+		new BottleButtonOnClickListener(this);
+
+		new PauseButtonOnClickListener(this);
+		new StopButtonOnClickListener(this);
+		new ChangeButtonOnClickListener(this);
 		
 		initTab();
 	}
