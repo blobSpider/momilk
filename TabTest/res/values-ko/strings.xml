@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 한글 환경 -->
+    <string name="app_name">수유 시계</string>
+
+    <!-- 타이틀 문자열 -->
+    <string name="str_last_feeding_title">지난번 수유</string>
+    <string name="str_current_feeding_title">수유중</string>
+
+    <string-array name="typeTitles">
+        <item>L:왼쪽</item>
+        <item>R:오른쪽</item>
+        <item>B:젖병</item>
+        <item>LR:양쪽</item>
+        <item>LRB:혼합</item>
+    </string-array>
+    
+    <!-- 시간 표현 포맷터들 -->
+    <string-array name="agoTimeFormats">
+        <item>%s분전</item>
+        <item>%1$s시간 %2$s분전</item>
+    </string-array>
+    <string-array name="durationTimeFormats">
+        <item>%s초</item>
+        <item>%1$s분  %2$s초</item>
+        <item>%1$s시간 %2$s분 %3$s초</item>
+    </string-array>
+
+</resources>
