@@ -7,6 +7,7 @@
     <!-- the Titles -->
     <string name="str_last_feeding_title">Last Feeding</string>
     <string name="str_current_feeding_title">Current Feeding</string>
+    <string name="str_only_just_title">Only Just</string>
 
     <string-array name="typeTitles">
         <item>L:Left</item>

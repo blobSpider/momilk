@@ -25,6 +25,11 @@ public class AppContext {
 	private boolean pause;
 	private long pausedTime;
 
+	private String[] agoTimeFormats;
+	private String[] durationTimeFormats;
+	private Map<String, String> typeTitleMap;
+	private String onlyJustTitle;
+
 	public Activity getMainActivity() {
 		return mainActivity;
 	}
@@ -83,8 +88,6 @@ public class AppContext {
 		this.pausedTime = pausedTime;
 	}
 
-	private String[] agoTimeFormats;
-
 	public String[] getAgoTimeFormats() {
 		if (this.agoTimeFormats == null) {
 			this.agoTimeFormats = mainActivity.getResources().getStringArray(R.array.agoTimeFormats);
@@ -92,16 +95,12 @@ public class AppContext {
 		return agoTimeFormats;
 	}
 
-	private String[] durationTimeFormats;
-
 	public String[] getDurationTimeFormats() {
 		if (this.durationTimeFormats == null) {
 			this.durationTimeFormats = mainActivity.getResources().getStringArray(R.array.durationTimeFormats);
 		}
 		return durationTimeFormats;
 	}
-
-	private Map<String, String> typeTitleMap;
 
 	public Map<String, String> getTypeTitleMap() {
 		if (this.typeTitleMap == null) {
@@ -115,4 +114,12 @@ public class AppContext {
 		}
 		return this.typeTitleMap;
 	}
+
+	public String getOnlyJustTitle() {
+		if(onlyJustTitle == null){
+			this.onlyJustTitle = mainActivity.getResources().getString(R.string.str_only_just_title);
+		}
+		return onlyJustTitle;
+	}
+	
 }

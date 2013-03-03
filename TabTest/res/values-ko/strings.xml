@@ -7,6 +7,7 @@
     <!-- 타이틀 문자열 -->
     <string name="str_last_feeding_title">지난번 수유</string>
     <string name="str_current_feeding_title">수유중</string>
+    <string name="str_only_just_title">방금</string>
 
     <string-array name="typeTitles">
         <item>L:왼쪽</item>
