@@ -2,6 +2,7 @@ package net.rubywork.feedingclock;
 
 import net.rubywork.feedingclock.ui.listener.ChangeButtonListener;
 import net.rubywork.feedingclock.ui.listener.LeftButtonListener;
+import net.rubywork.feedingclock.ui.listener.MusicButtonListener;
 import net.rubywork.feedingclock.ui.listener.PauseButtonListener;
 import net.rubywork.feedingclock.ui.listener.RightButtonListener;
 import net.rubywork.feedingclock.ui.listener.StopButtonListener;
@@ -69,5 +70,7 @@ public class MainActivity extends Activity {
 		ChangeButtonListener changeButtonListener = new ChangeButtonListener();
 		changeButton.setOnTouchListener(changeButtonListener);
 		changeButton.setOnClickListener(changeButtonListener);
+		
+		findViewById(R.id.ticTok).setOnClickListener(new MusicButtonListener());
 	}
 }
