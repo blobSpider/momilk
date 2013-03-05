@@ -69,6 +69,12 @@ public class FeedingSessionListViewAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 
+	public void reset(List<FeedingSession> items) {
+		records.clear();
+		records.addAll(items);
+		notifyDataSetChanged();
+	}
+
 	public boolean isSelectable(int position) {
 		return true;
 	}

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.rubywork.feedingclock.R;
 import android.app.Activity;
+import android.util.DisplayMetrics;
 import android.widget.Chronometer;
 
 public class AppContext {
@@ -16,14 +17,6 @@ public class AppContext {
 	public static AppContext getInstance() {
 		return instance;
 	}
-
-	public static final String[] TAB_LABELs = { "Recod", "History", "Music", "Settings" };
-	public static final String[] TAB_IDs = { "recordTabId", "historyTabId", "musicTabId", "settingsTabId" };
-	// public static final int[] TAB_IMG_ON_IDs = {
-	// R.drawable.tab_button_timer_on, R.drawable.tab_button_history_on,
-	// R.drawable.tab_button_music_on, R.drawable.tab_button_settings_on };
-	public static final int[] TAB_IMG_OFF_IDs = { R.drawable.tab_button_timer_off, R.drawable.tab_button_history_off, R.drawable.tab_button_music_off, R.drawable.tab_button_settings_off };
-	public static final int[] TAB_CONTENT_LAYOUT_IDs = { R.id.feedingContainer, R.id.historyContainer, R.id.soundContainer, R.id.moreContainer };
 
 	private Activity mainActivity;
 	private Chronometer chronometer;
@@ -39,12 +32,13 @@ public class AppContext {
 	private Map<String, String> typeTitleMap;
 	private String justNowTitle;
 
+	private int menuButtonWidth = 0;
+	
 	public Activity getMainActivity() {
 		return mainActivity;
 	}
 
 	public void setMainActivity(Activity mainActivity) {
-		this.chronometer = (Chronometer) mainActivity.findViewById(R.id.chronometer);
 		this.mainActivity = mainActivity;
 	}
 
@@ -82,6 +76,9 @@ public class AppContext {
 	}
 
 	public Chronometer getChronometer() {
+		if(this.chronometer == null){
+			this.chronometer = (Chronometer) mainActivity.findViewById(R.id.chronometer);
+		}
 		return chronometer;
 	}
 
@@ -140,6 +137,16 @@ public class AppContext {
 			this.justNowTitle = mainActivity.getResources().getString(R.string.str_just_now_title);
 		}
 		return justNowTitle;
+	}
+
+	public int getMenuButtonWidth() {
+		if(this.menuButtonWidth == 0){
+			DisplayMetrics displayMetrics = new DisplayMetrics();
+			mainActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+			this.menuButtonWidth = displayMetrics.widthPixels / 3;
+		}
+		
+		return menuButtonWidth;
 	}
 
 }
