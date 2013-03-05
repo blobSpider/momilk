@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp" >
+
+        <net.rubywork.feedingclock.ui.view.SubMenuButton
+            android:id="@+id/menuSettingsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/composer_camera"
+            android:visibility="visible" />
+
+        <net.rubywork.feedingclock.ui.view.SubMenuButton
+            android:id="@+id/menuMusicButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/composer_music"
+            android:visibility="visible" />
+
+        <net.rubywork.feedingclock.ui.view.SubMenuButton
+            android:id="@+id/menuHistoryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/composer_with"
+            android:visibility="visible" />
+
+        <net.rubywork.feedingclock.ui.view.SubMenuButton
+            android:id="@+id/menuRecordButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/composer_place"
+            android:visibility="visible" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:clickable="true"
+            android:visibility="visible" >
+
+            <net.rubywork.feedingclock.ui.view.MainMenuButton
+                android:id="@+id/mainButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/composer_button" />
+
+            <ImageView
+                android:id="@+id/mainButtonImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/composer_icn_plus" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</merge>
