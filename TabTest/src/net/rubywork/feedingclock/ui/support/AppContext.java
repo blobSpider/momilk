@@ -139,13 +139,12 @@ public class AppContext {
 		return justNowTitle;
 	}
 
+	private DisplayMetrics displayMetrics = new DisplayMetrics();
 	public int getMenuButtonWidth() {
 		if(this.menuButtonWidth == 0){
-			DisplayMetrics displayMetrics = new DisplayMetrics();
 			mainActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 			this.menuButtonWidth = displayMetrics.widthPixels / 3;
 		}
-		
 		return menuButtonWidth;
 	}
 

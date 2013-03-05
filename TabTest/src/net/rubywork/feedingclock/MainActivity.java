@@ -42,10 +42,8 @@ public class MainActivity extends Activity {
 	}
 
 	private void init() {
-
 		initView();
 		initListeners();
-
 	}
 
 	private static final int [] MENU_BUTTON_IDs = {R.id.menuSettingsButton, R.id.menuMusicButton, R.id.menuHistoryButton, R.id.menuRecordButton};  // it determined buttons order for displaying.
@@ -53,8 +51,6 @@ public class MainActivity extends Activity {
 	
 	private void initView() {
 		initMenuButtonAndContainerView();
-		
-		
 	}
 	
 	private void initMenuButtonAndContainerView(){
