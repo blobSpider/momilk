@@ -1,7 +1,6 @@
 package net.rubywork.feedingclock.ui.support;
 
 import java.util.List;
-import java.util.Map;
 
 import net.rubywork.feedingclock.R;
 import net.rubywork.feedingclock.dao.FeedingRecordDao;
@@ -17,9 +16,6 @@ public class LastFeedingRecordThread extends Thread {
 	
 	private Runnable runnable;
 	private Handler handler = new Handler();
-	private String[] agoTimeFormats;
-	private String[] durationTimeFormats;
-	private Map<String, String> typeTitleMap;
 
 	private FeedingRecordDao feedingRecordDao;
 	private Activity activity;
@@ -43,9 +39,6 @@ public class LastFeedingRecordThread extends Thread {
 		this.feedingRecordDao = FeedingRecordDaoImpl.getInstance();
 		this.appContext = AppContext.getInstance();
 		this.activity = appContext.getMainActivity();
-		this.agoTimeFormats = appContext.getAgoTimeFormats();
-		this.durationTimeFormats = appContext.getDurationTimeFormats();
-		this.typeTitleMap = appContext.getTypeTitleMap();
 
 		this.agoTimeView = (TextView) activity.findViewById(R.id.agoTimeView);
 		this.feedingTypeView = (TextView) activity.findViewById(R.id.feedingTypeView);
@@ -79,17 +72,14 @@ public class LastFeedingRecordThread extends Thread {
 			String agoTimeText = null;
 			int minDiff = (int) (lastRecord.getAgoTimeMillis() / (1000 * 60));
 			if (minDiff < 3) {
-				agoTimeText = this.appContext.getOnlyJustTitle();
+				agoTimeText = this.appContext.getJustNowTitle();
 			} else {
-				Object[] agoTimeElements = DateUtils.formatElapsedTime(lastRecord.getAgoTimeMillis() / 1000L).split(":");
-				agoTimeText = String.format(agoTimeFormats[agoTimeElements.length - 2], agoTimeElements);
+				agoTimeText = TimeFormatUtils.formatAgoTime(lastRecord.getAgoTimeMillis());
 			}
 
-			Object[] durationTimeElements = DateUtils.formatElapsedTime(lastRecord.getValue() / 1000L).split(":");
-
 			agoTimeView.setText(agoTimeText);
-			durationView.setText(String.format(durationTimeFormats[durationTimeElements.length - 1], durationTimeElements));
-			feedingTypeView.setText(typeTitleMap.get(lastRecord.getType()));
+			durationView.setText(TimeFormatUtils.formatDurationTime(lastRecord.getValue()));
+			feedingTypeView.setText(this.appContext.getTypeTitle(lastRecord.getType()));
 			lastTimeView.setText(DateUtils.formatDateTime(activity, lastRecord.getUpdatedTimeMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR));
 		}
 	}

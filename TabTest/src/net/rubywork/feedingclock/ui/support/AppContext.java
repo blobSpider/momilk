@@ -17,6 +17,14 @@ public class AppContext {
 		return instance;
 	}
 
+	public static final String[] TAB_LABELs = { "Recod", "History", "Music", "Settings" };
+	public static final String[] TAB_IDs = { "recordTabId", "historyTabId", "musicTabId", "settingsTabId" };
+	// public static final int[] TAB_IMG_ON_IDs = {
+	// R.drawable.tab_button_timer_on, R.drawable.tab_button_history_on,
+	// R.drawable.tab_button_music_on, R.drawable.tab_button_settings_on };
+	public static final int[] TAB_IMG_OFF_IDs = { R.drawable.tab_button_timer_off, R.drawable.tab_button_history_off, R.drawable.tab_button_music_off, R.drawable.tab_button_settings_off };
+	public static final int[] TAB_CONTENT_LAYOUT_IDs = { R.id.feedingContainer, R.id.historyContainer, R.id.soundContainer, R.id.moreContainer };
+
 	private Activity mainActivity;
 	private Chronometer chronometer;
 	private LastFeedingRecordThread lastFeedingRecordThread;
@@ -25,10 +33,11 @@ public class AppContext {
 	private boolean pause;
 	private long pausedTime;
 
-	private String[] agoTimeFormats;
-	private String[] durationTimeFormats;
+	private String[] agoTimeFormatters;
+	private String[] durationTimeFormatters;
+	private String[] gapTimeFormatters;
 	private Map<String, String> typeTitleMap;
-	private String onlyJustTitle;
+	private String justNowTitle;
 
 	public Activity getMainActivity() {
 		return mainActivity;
@@ -88,21 +97,28 @@ public class AppContext {
 		this.pausedTime = pausedTime;
 	}
 
-	public String[] getAgoTimeFormats() {
-		if (this.agoTimeFormats == null) {
-			this.agoTimeFormats = mainActivity.getResources().getStringArray(R.array.agoTimeFormats);
+	public String[] getAgoTimeFormatters() {
+		if (this.agoTimeFormatters == null) {
+			this.agoTimeFormatters = mainActivity.getResources().getStringArray(R.array.agoTimeFormats);
 		}
-		return agoTimeFormats;
+		return agoTimeFormatters;
 	}
 
-	public String[] getDurationTimeFormats() {
-		if (this.durationTimeFormats == null) {
-			this.durationTimeFormats = mainActivity.getResources().getStringArray(R.array.durationTimeFormats);
+	public String[] getDurationTimeFormatters() {
+		if (this.durationTimeFormatters == null) {
+			this.durationTimeFormatters = mainActivity.getResources().getStringArray(R.array.durationTimeFormats);
 		}
-		return durationTimeFormats;
+		return durationTimeFormatters;
 	}
 
-	public Map<String, String> getTypeTitleMap() {
+	public String[] getGapTimeFormatters() {
+		if (this.gapTimeFormatters == null) {
+			this.gapTimeFormatters = mainActivity.getResources().getStringArray(R.array.gapTimeFormats);
+		}
+		return gapTimeFormatters;
+	}
+
+	private Map<String, String> getTypeTitleMap() {
 		if (this.typeTitleMap == null) {
 			this.typeTitleMap = new HashMap<String, String>();
 
@@ -115,11 +131,15 @@ public class AppContext {
 		return this.typeTitleMap;
 	}
 
-	public String getOnlyJustTitle() {
-		if(onlyJustTitle == null){
-			this.onlyJustTitle = mainActivity.getResources().getString(R.string.str_only_just_title);
-		}
-		return onlyJustTitle;
+	public String getTypeTitle(String type) {
+		return this.getTypeTitleMap().get(type);
 	}
-	
+
+	public String getJustNowTitle() {
+		if (justNowTitle == null) {
+			this.justNowTitle = mainActivity.getResources().getString(R.string.str_just_now_title);
+		}
+		return justNowTitle;
+	}
+
 }

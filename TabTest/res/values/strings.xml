@@ -7,25 +7,30 @@
     <!-- the Titles -->
     <string name="str_last_feeding_title">Last Feeding</string>
     <string name="str_current_feeding_title">Current Feeding</string>
-    <string name="str_only_just_title">just now</string>
+    <string name="str_just_now_title">just now</string>
 
     <string-array name="typeTitles">
         <item>L:Left</item>
         <item>R:Right</item>
         <item>B:Bottle</item>
-        <item>LR:L ↔ R</item>
+        <item>LR:Both</item>
         <item>LRB:Mix</item>
     </string-array>
 
     <!-- the various Time Formatters -->
     <string-array name="agoTimeFormats">
+        <item>%ssec ago</item>
         <item>%smin ago</item>
         <item>%1$sh %2$sm ago</item>
     </string-array>
     <string-array name="durationTimeFormats">
-        <item>%ssec</item>
+        <item>%s sec</item>
         <item>%1$smin %2$ssec</item>
-        <item>%1$sh %2$sm %3$ss</item>
+        <item>%1$shour %2$smin</item>
     </string-array>
-
-</resources>
+    <string-array name="gapTimeFormats">
+        <item>) +%s sec</item>
+        <item>) +%1$sm %2$ss</item>
+        <item>) +%1$sh %2$sm</item>
+    </string-array>
+</resources>

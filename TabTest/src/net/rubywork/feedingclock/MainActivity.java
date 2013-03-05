@@ -16,10 +16,6 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
 public class MainActivity extends Activity {
-	private static final String[] TAB_LABELs = { "Recod", "History", "Music", "Settings" };
-	private static final int[] TAB_IMG_ON_IDs = { R.drawable.tab_button_timer_on, R.drawable.tab_button_history_on, R.drawable.tab_button_music_on, R.drawable.tab_button_settings_on };
-	private static final int[] TAB_IMG_OFF_IDs = { R.drawable.tab_button_timer_off, R.drawable.tab_button_history_off, R.drawable.tab_button_music_off, R.drawable.tab_button_settings_off };
-	private static final int[] TAB_CONTENT_LAYOUT_IDs = { R.id.feedingContainer, R.id.historyContainer, R.id.soundContainer, R.id.moreContainer };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -35,10 +31,15 @@ public class MainActivity extends Activity {
 	}
 
 	private void init() {
-		AppContext.getInstance().setMainActivity(this);
+		AppContext.getInstance().setMainActivity(this); // * important : it must do invocation at first of all!
 
+		initView();
 		initTab();
 		initListeners();
+	}
+	
+	private void initView(){
+
 	}
 
 	private void initTab() {
@@ -46,10 +47,10 @@ public class MainActivity extends Activity {
 		tabHost.setup();
 		tabHost.setOnTabChangedListener(new TabChangListener(tabHost));
 
-		for (int i = 0; i < TAB_CONTENT_LAYOUT_IDs.length; i++) {
-			TabSpec tabSpec = tabHost.newTabSpec(TAB_LABELs[i])
-					.setContent(TAB_CONTENT_LAYOUT_IDs[i])
-					.setIndicator(TAB_LABELs[i], getResources().getDrawable(TAB_IMG_OFF_IDs[i]));
+		for (int i = 0; i < AppContext.TAB_CONTENT_LAYOUT_IDs.length; i++) {
+			TabSpec tabSpec = tabHost.newTabSpec(AppContext.TAB_IDs[i])
+					.setContent(AppContext.TAB_CONTENT_LAYOUT_IDs[i])
+					.setIndicator(AppContext.TAB_LABELs[i], getResources().getDrawable(AppContext.TAB_IMG_OFF_IDs[i]));
 			tabHost.addTab(tabSpec);
 		}
 	}

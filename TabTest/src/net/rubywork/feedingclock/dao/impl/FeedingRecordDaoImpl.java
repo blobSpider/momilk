@@ -1,6 +1,10 @@
 package net.rubywork.feedingclock.dao.impl;
 
+import static net.rubywork.feedingclock.dao.FeedingRecordDao.table;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import net.rubywork.feedingclock.dao.FeedingRecordDao;
 import net.rubywork.feedingclock.dao.GenericDaoImpl;
@@ -74,5 +78,27 @@ public class FeedingRecordDaoImpl extends GenericDaoImpl<FeedingRecord, Long> im
 	@Override
 	public void removeAll() {
 		this.sqllite.delete(table, null, null);
+	}
+
+	private static final String SQL_SELECT_ALL_SESSION = "select sessionId from feedingrecord group by sessionId order by sessionId asc";
+	@Override
+	public List<Long> getSessionIds(String[] selectionArgs) {
+		List<Long> list = new ArrayList<Long>();
+		Cursor cursor = this.queryForCursor(SQL_SELECT_ALL_SESSION, selectionArgs);
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			list.add(cursor.getLong(cursor.getColumnIndex(columnSessionId)));
+			cursor.moveToNext();
+		}
+		if (this.cursor != null) {
+			this.cursor.close();
+		}
+		return list;
+	}
+
+	private static final String SQL_SELECT_ALL_BY_SESSIONID = "select * from feedingrecord where sessionId=? order by _id asc";
+	@Override
+	public List<FeedingRecord> getAllBySessionId(Long sessionId) {
+		return this.queryForList(SQL_SELECT_ALL_BY_SESSIONID, new String[]{String.valueOf(sessionId)});
 	}
 }

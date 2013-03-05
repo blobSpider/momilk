@@ -1,5 +1,7 @@
 package net.rubywork.feedingclock.dao;
 
+import java.util.List;
+
 import net.rubywork.feedingclock.model.FeedingRecord;
 
 public interface FeedingRecordDao extends GenericDao<FeedingRecord, Long>{
@@ -17,4 +19,8 @@ public interface FeedingRecordDao extends GenericDao<FeedingRecord, Long>{
 	public final String indexDropQuery = "DROP INDEX IF EXISTS " + table;
 
 	public void removeAll();
+
+	public List<Long> getSessionIds(String[] selectionArgs);
+
+	public List<FeedingRecord> getAllBySessionId(Long sessionId);
 }

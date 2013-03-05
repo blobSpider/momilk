@@ -7,7 +7,7 @@
     <!-- 타이틀 문자열 -->
     <string name="str_last_feeding_title">지난번 수유</string>
     <string name="str_current_feeding_title">수유중</string>
-    <string name="str_only_just_title">방금</string>
+    <string name="str_just_now_title">방금</string>
 
     <string-array name="typeTitles">
         <item>L:왼쪽</item>
@@ -19,13 +19,19 @@
     
     <!-- 시간 표현 포맷터들 -->
     <string-array name="agoTimeFormats">
+        <item>%s초전</item>
         <item>%s분전</item>
         <item>%1$s시간 %2$s분전</item>
     </string-array>
     <string-array name="durationTimeFormats">
         <item>%s초</item>
-        <item>%1$s분  %2$s초</item>
-        <item>%1$s시간 %2$s분 %3$s초</item>
+        <item>%1$s분 %2$s초</item>
+        <item>%1$s시간 %2$s분</item>
+    </string-array>
+    <string-array name="gapTimeFormats">
+        <item>) +%s초</item>
+        <item>) +%1$s분 %2$s초</item>
+        <item>) +%1$s시간 %2$s분</item>
     </string-array>
 
 </resources>
