@@ -13,18 +13,33 @@
             android:layout_height="80dp"
             android:background="#F5DEB3" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tab3" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/ticTok"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TicTok" />
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="70dp"
+                android:layout_height="65dp"
+                android:layout_weight="0.02"
+                android:src="@android:drawable/sym_def_app_icon" />
 
+            <TextView
+                android:id="@+id/musicName"
+                android:layout_width="wrap_content"
+                android:layout_height="75dp"
+                android:layout_gravity="clip_vertical"
+                android:layout_weight="0.02"
+                android:text="White Rain Noise" />
+
+            <Button
+                android:id="@+id/play"
+                android:layout_width="wrap_content"
+                android:layout_height="74dp"
+                android:layout_weight="0.03"
+                android:text="Play" />
+		</LinearLayout>
     </LinearLayout>
 
 </merge>

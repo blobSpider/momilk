@@ -89,6 +89,6 @@ public class MainActivity extends Activity {
 		changeButton.setOnTouchListener(changeButtonListener);
 		changeButton.setOnClickListener(changeButtonListener);
 
-		findViewById(R.id.ticTok).setOnClickListener(new MusicButtonListener());
+		findViewById(R.id.play).setOnClickListener(new MusicButtonListener());
 	}
 }
