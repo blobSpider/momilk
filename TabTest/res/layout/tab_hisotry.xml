@@ -18,8 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:cacheColorHint="#ffffffff"
-            android:divider="@android:drawable/divider_horizontal_dim_dark"
-            android:padding="4dp" />
+            android:divider="@android:drawable/divider_horizontal_dim_dark" />
     </LinearLayout>
 
 </merge>
