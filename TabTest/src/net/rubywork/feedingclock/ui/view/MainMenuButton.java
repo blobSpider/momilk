@@ -1,9 +1,12 @@
 package net.rubywork.feedingclock.ui.view;
 
+import net.rubywork.feedingclock.ui.support.AppContext;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
@@ -13,9 +16,27 @@ public class MainMenuButton extends Button implements View.OnClickListener {
 	private boolean hasOpened;
 	private ImageView imageView;
 	private SubMenuButton[] buttons;
+	private boolean animateFlag;
+	private int menuButtonWidth = 0;
 
 	private Animation openRotateAnimation = new RotateAnimation(0, 45, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 	private Animation closeRotateAnimation = new RotateAnimation(-45, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+	private AnimationListener openAnimationListener = new AnimationListener() {
+		@Override
+		public void onAnimationStart(Animation animation) {
+			animateFlag = true;
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			animateFlag = false;
+		}
+	};
 
 	public MainMenuButton(Context context) {
 		super(context);
@@ -38,10 +59,12 @@ public class MainMenuButton extends Button implements View.OnClickListener {
 	private void initAnimation() {
 		this.openRotateAnimation.setInterpolator(AnimationUtils.loadInterpolator(getContext(), android.R.anim.anticipate_overshoot_interpolator));
 		this.openRotateAnimation.setFillAfter(true);
+		this.openRotateAnimation.setAnimationListener(openAnimationListener);
 
 		this.closeRotateAnimation.setInterpolator(AnimationUtils.loadInterpolator(getContext(), android.R.anim.anticipate_overshoot_interpolator));
 		this.closeRotateAnimation.setInterpolator(AnimationUtils.loadInterpolator(getContext(), android.R.anim.anticipate_overshoot_interpolator));
 		this.closeRotateAnimation.setFillAfter(true);
+		this.closeRotateAnimation.setAnimationListener(openAnimationListener);
 	}
 
 	public void setImageView(ImageView imageView) {
@@ -54,7 +77,9 @@ public class MainMenuButton extends Button implements View.OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		toggle();
+		if(!this.isOnAnimateMenuButtons()){
+			toggle();
+		}
 	}
 
 	public void toggle() {
@@ -68,4 +93,26 @@ public class MainMenuButton extends Button implements View.OnClickListener {
 		this.imageView.startAnimation(this.hasOpened ? this.closeRotateAnimation : this.openRotateAnimation);
 		this.hasOpened = !this.hasOpened;
 	}
+
+	public boolean isAnimateFlag() {
+		return animateFlag;
+	}
+
+	private DisplayMetrics displayMetrics = new DisplayMetrics();
+	public int getMenuButtonWidth() {
+		if(this.menuButtonWidth == 0){
+			AppContext.getInstance().getMainActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+			this.menuButtonWidth = displayMetrics.widthPixels / 3;
+		}
+		return menuButtonWidth;
+	}
+	
+	public boolean isOnAnimateMenuButtons(){
+		boolean flag = this.isAnimateFlag();
+		for(SubMenuButton subButton : this.buttons){
+			flag |= subButton.isAnimateFlag();
+		}
+		return flag;
+	}
+	
 }

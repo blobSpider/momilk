@@ -1,6 +1,7 @@
 package net.rubywork.feedingclock.ui.support;
 
 import java.util.List;
+import java.util.Map;
 
 import net.rubywork.feedingclock.R;
 import net.rubywork.feedingclock.dao.FeedingRecordDao;
@@ -13,7 +14,7 @@ import android.widget.TextView;
 
 public class LastFeedingRecordThread extends Thread {
 	private AppContext appContext;
-	
+
 	private Runnable runnable;
 	private Handler handler = new Handler();
 
@@ -24,6 +25,7 @@ public class LastFeedingRecordThread extends Thread {
 	private TextView feedingTypeView;
 	private TextView lastTimeView;
 	private TextView durationView;
+	private Map<String, String> typeTitleMap;
 
 	public void run() {
 		while (true) {
@@ -39,6 +41,7 @@ public class LastFeedingRecordThread extends Thread {
 		this.feedingRecordDao = FeedingRecordDaoImpl.getInstance();
 		this.appContext = AppContext.getInstance();
 		this.activity = appContext.getMainActivity();
+		this.typeTitleMap = appContext.getTypeTitleMap();
 
 		this.agoTimeView = (TextView) activity.findViewById(R.id.agoTimeView);
 		this.feedingTypeView = (TextView) activity.findViewById(R.id.feedingTypeView);
@@ -54,7 +57,8 @@ public class LastFeedingRecordThread extends Thread {
 
 	private static final String SQL_LATEST_ONE = "select * from feedingrecord order by _id desc limit 1";
 	private static final String SQL_LATEST_SESSION = "select * from feedingrecord where sessionId=? order by _id asc";
-
+	private static final int dateTimeFormat = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR;
+	
 	public void updateLastRecordView() {
 		FeedingRecord lastRecord = feedingRecordDao.queryForObject(SQL_LATEST_ONE, null);
 		if (lastRecord != null) {
@@ -79,8 +83,8 @@ public class LastFeedingRecordThread extends Thread {
 
 			agoTimeView.setText(agoTimeText);
 			durationView.setText(TimeFormatUtils.formatDurationTime(lastRecord.getValue()));
-			feedingTypeView.setText(this.appContext.getTypeTitle(lastRecord.getType()));
-			lastTimeView.setText(DateUtils.formatDateTime(activity, lastRecord.getUpdatedTimeMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_12HOUR));
+			feedingTypeView.setText(this.typeTitleMap.get(lastRecord.getType()));
+			lastTimeView.setText(DateUtils.formatDateTime(activity, lastRecord.getUpdatedTimeMillis(), dateTimeFormat));
 		}
 	}
 }

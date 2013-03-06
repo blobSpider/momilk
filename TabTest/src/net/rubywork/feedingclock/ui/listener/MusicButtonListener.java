@@ -13,14 +13,14 @@ public class MusicButtonListener implements OnClickListener {
 	private AppContext appContext;
 	private MediaPlayer mediaPlayer;
 	private Button controlBtn;
-	
+
 	public MusicButtonListener() {
 		this.appContext = AppContext.getInstance();
 		Activity activity = appContext.getMainActivity();
 		this.mediaPlayer = MediaPlayer.create(appContext.getMainActivity(), R.raw.whitenoise);
 		this.controlBtn = (Button) activity.findViewById(R.id.play);
 	}
-	
+
 	@Override
 	public void onClick(View view) {
 		mediaPlayer.setLooping(true);

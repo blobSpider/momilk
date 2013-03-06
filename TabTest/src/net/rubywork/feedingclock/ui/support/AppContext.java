@@ -5,7 +5,6 @@ import java.util.Map;
 
 import net.rubywork.feedingclock.R;
 import android.app.Activity;
-import android.util.DisplayMetrics;
 import android.widget.Chronometer;
 
 public class AppContext {
@@ -19,20 +18,13 @@ public class AppContext {
 	}
 
 	private Activity mainActivity;
-	private Chronometer chronometer;
 	private LastFeedingRecordThread lastFeedingRecordThread;
 	private String currentType;
 	private Long currentSessionId;
 	private boolean pause;
 	private long pausedTime;
 
-	private String[] agoTimeFormatters;
-	private String[] durationTimeFormatters;
-	private String[] gapTimeFormatters;
-	private Map<String, String> typeTitleMap;
 	private String justNowTitle;
-
-	private int menuButtonWidth = 0;
 	
 	public Activity getMainActivity() {
 		return mainActivity;
@@ -76,14 +68,7 @@ public class AppContext {
 	}
 
 	public Chronometer getChronometer() {
-		if(this.chronometer == null){
-			this.chronometer = (Chronometer) mainActivity.findViewById(R.id.chronometer);
-		}
-		return chronometer;
-	}
-
-	public void setChronometer(Chronometer chronometer) {
-		this.chronometer = chronometer;
+		return (Chronometer) mainActivity.findViewById(R.id.chronometer);
 	}
 
 	public long getPausedTime() {
@@ -95,57 +80,30 @@ public class AppContext {
 	}
 
 	public String[] getAgoTimeFormatters() {
-		if (this.agoTimeFormatters == null) {
-			this.agoTimeFormatters = mainActivity.getResources().getStringArray(R.array.agoTimeFormats);
-		}
-		return agoTimeFormatters;
+		return mainActivity.getResources().getStringArray(R.array.agoTimeFormats);
 	}
 
 	public String[] getDurationTimeFormatters() {
-		if (this.durationTimeFormatters == null) {
-			this.durationTimeFormatters = mainActivity.getResources().getStringArray(R.array.durationTimeFormats);
-		}
-		return durationTimeFormatters;
+		return mainActivity.getResources().getStringArray(R.array.durationTimeFormats);
 	}
 
 	public String[] getGapTimeFormatters() {
-		if (this.gapTimeFormatters == null) {
-			this.gapTimeFormatters = mainActivity.getResources().getStringArray(R.array.gapTimeFormats);
-		}
-		return gapTimeFormatters;
+		return mainActivity.getResources().getStringArray(R.array.gapTimeFormats);
 	}
 
-	private Map<String, String> getTypeTitleMap() {
-		if (this.typeTitleMap == null) {
-			this.typeTitleMap = new HashMap<String, String>();
-
-			String[] typeTitles = mainActivity.getResources().getStringArray(R.array.typeTitles);
-			for (String title : typeTitles) {
-				String[] temp = title.split(":");
-				this.typeTitleMap.put(temp[0], temp[1]);
-			}
+	public Map<String, String> getTypeTitleMap() {
+		Map<String, String> typeTitleMap = new HashMap<String, String>();
+		String[] typeTitles = mainActivity.getResources().getStringArray(R.array.typeTitles);
+		for (String title : typeTitles) {
+			String[] temp = title.split(":");
+			typeTitleMap.put(temp[0], temp[1]);
 		}
-		return this.typeTitleMap;
-	}
-
-	public String getTypeTitle(String type) {
-		return this.getTypeTitleMap().get(type);
+		
+		return typeTitleMap;
 	}
 
 	public String getJustNowTitle() {
-		if (justNowTitle == null) {
-			this.justNowTitle = mainActivity.getResources().getString(R.string.str_just_now_title);
-		}
+		this.justNowTitle = mainActivity.getResources().getString(R.string.str_just_now_title);
 		return justNowTitle;
 	}
-
-	private DisplayMetrics displayMetrics = new DisplayMetrics();
-	public int getMenuButtonWidth() {
-		if(this.menuButtonWidth == 0){
-			mainActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-			this.menuButtonWidth = displayMetrics.widthPixels / 3;
-		}
-		return menuButtonWidth;
-	}
-
 }
