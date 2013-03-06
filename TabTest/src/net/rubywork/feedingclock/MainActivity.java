@@ -15,6 +15,7 @@ import net.rubywork.feedingclock.ui.listener.SubMenuButtonListener.MenuViewCallb
 import net.rubywork.feedingclock.ui.listener.SubMenuButtonListener.MenuViewEntry;
 import net.rubywork.feedingclock.ui.support.AppContext;
 import net.rubywork.feedingclock.ui.support.LastFeedingRecordThread;
+import net.rubywork.feedingclock.ui.support.ResourceUtils;
 import net.rubywork.feedingclock.ui.view.MainMenuButton;
 import net.rubywork.feedingclock.ui.view.SubMenuButton;
 import android.app.Activity;
@@ -99,17 +100,15 @@ public class MainActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("종료하시겠습니까?").setCancelable(false).setPositiveButton("예", new DialogInterface.OnClickListener() {
+		builder.setTitle(ResourceUtils.titleAppQuit()).setMessage(ResourceUtils.titleAppQuitConfirm()).setCancelable(false).setPositiveButton(ResourceUtils.titlePositive(), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				finish();
 				System.exit(0);
 			}
-		}).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+		}).setNegativeButton(ResourceUtils.titleNegative(), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				dialog.cancel();
 			}
-		});
-		AlertDialog alert = builder.create();
-		alert.show();
+		}).create().show();
 	}
 }

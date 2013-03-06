@@ -5,7 +5,7 @@ import android.text.format.DateUtils;
 public class TimeFormatUtils {
 
 	public static final String formatGapTime(long millis) {
-		String[] formatters = AppContext.getInstance().getGapTimeFormatters();
+		String[] formatters = ResourceUtils.getGapTimeFormatters();
 		Object[] timeElements = DateUtils.formatElapsedTime(millis / 1000L).split(":");
 		
 		int length = timeElements.length;
@@ -18,7 +18,7 @@ public class TimeFormatUtils {
 	}
 
 	public static final String formatDurationTime(long millis) {
-		String[] formatters = AppContext.getInstance().getDurationTimeFormatters();
+		String[] formatters = ResourceUtils.getDurationTimeFormatters();
 		Object[] timeElements = DateUtils.formatElapsedTime(millis / 1000L).split(":");
 
 		int length = timeElements.length;
@@ -31,7 +31,7 @@ public class TimeFormatUtils {
 	}
 
 	public static final String formatAgoTime(long millis) {
-		String[] formatters = AppContext.getInstance().getAgoTimeFormatters();
+		String[] formatters = ResourceUtils.getAgoTimeFormatters();
 		Object[] timeElements = DateUtils.formatElapsedTime(millis / 1000L).split(":");
 
 		int length = timeElements.length;

@@ -1,21 +1,14 @@
 package net.rubywork.feedingclock.ui.support;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.rubywork.feedingclock.R;
 import android.app.Activity;
+import android.content.res.Resources;
 import android.widget.Chronometer;
 
 public class AppContext {
 	private static final AppContext instance = new AppContext();
-
-	private AppContext() {
-	}
-
-	public static AppContext getInstance() {
-		return instance;
-	}
+	private AppContext() {}
+	public static AppContext getInstance() {return instance;}
 
 	private Activity mainActivity;
 	private LastFeedingRecordThread lastFeedingRecordThread;
@@ -23,8 +16,6 @@ public class AppContext {
 	private Long currentSessionId;
 	private boolean pause;
 	private long pausedTime;
-
-	private String justNowTitle;
 	
 	public Activity getMainActivity() {
 		return mainActivity;
@@ -79,31 +70,7 @@ public class AppContext {
 		this.pausedTime = pausedTime;
 	}
 
-	public String[] getAgoTimeFormatters() {
-		return mainActivity.getResources().getStringArray(R.array.agoTimeFormats);
-	}
-
-	public String[] getDurationTimeFormatters() {
-		return mainActivity.getResources().getStringArray(R.array.durationTimeFormats);
-	}
-
-	public String[] getGapTimeFormatters() {
-		return mainActivity.getResources().getStringArray(R.array.gapTimeFormats);
-	}
-
-	public Map<String, String> getTypeTitleMap() {
-		Map<String, String> typeTitleMap = new HashMap<String, String>();
-		String[] typeTitles = mainActivity.getResources().getStringArray(R.array.typeTitles);
-		for (String title : typeTitles) {
-			String[] temp = title.split(":");
-			typeTitleMap.put(temp[0], temp[1]);
-		}
-		
-		return typeTitleMap;
-	}
-
-	public String getJustNowTitle() {
-		this.justNowTitle = mainActivity.getResources().getString(R.string.str_just_now_title);
-		return justNowTitle;
+	public Resources getResources() {
+		return mainActivity.getResources();
 	}
 }

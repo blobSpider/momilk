@@ -41,7 +41,7 @@ public class LastFeedingRecordThread extends Thread {
 		this.feedingRecordDao = FeedingRecordDaoImpl.getInstance();
 		this.appContext = AppContext.getInstance();
 		this.activity = appContext.getMainActivity();
-		this.typeTitleMap = appContext.getTypeTitleMap();
+		this.typeTitleMap = ResourceUtils.getTypeTitleMap();
 
 		this.agoTimeView = (TextView) activity.findViewById(R.id.agoTimeView);
 		this.feedingTypeView = (TextView) activity.findViewById(R.id.feedingTypeView);
@@ -76,7 +76,7 @@ public class LastFeedingRecordThread extends Thread {
 			String agoTimeText = null;
 			int minDiff = (int) (lastRecord.getAgoTimeMillis() / (1000 * 60));
 			if (minDiff < 3) {
-				agoTimeText = this.appContext.getJustNowTitle();
+				agoTimeText = ResourceUtils.titleJustNow();
 			} else {
 				agoTimeText = TimeFormatUtils.formatAgoTime(lastRecord.getAgoTimeMillis());
 			}

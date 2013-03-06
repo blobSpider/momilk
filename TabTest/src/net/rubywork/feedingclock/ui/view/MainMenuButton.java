@@ -25,7 +25,6 @@ public class MainMenuButton extends Button implements View.OnClickListener {
 	private AnimationListener openAnimationListener = new AnimationListener() {
 		@Override
 		public void onAnimationStart(Animation animation) {
-			animateFlag = true;
 		}
 
 		@Override
@@ -77,7 +76,8 @@ public class MainMenuButton extends Button implements View.OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		if(!this.isOnAnimateMenuButtons()){
+		if (!this.isOnAnimateMenuButtons()) {
+			animateFlag = true;
 			toggle();
 		}
 	}
@@ -94,25 +94,26 @@ public class MainMenuButton extends Button implements View.OnClickListener {
 		this.hasOpened = !this.hasOpened;
 	}
 
-	public boolean isAnimateFlag() {
-		return animateFlag;
-	}
+//	public boolean isAnimateFlag() {
+//		return animateFlag;
+//	}
 
 	private DisplayMetrics displayMetrics = new DisplayMetrics();
+
 	public int getMenuButtonWidth() {
-		if(this.menuButtonWidth == 0){
+		if (this.menuButtonWidth == 0) {
 			AppContext.getInstance().getMainActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 			this.menuButtonWidth = displayMetrics.widthPixels / 3;
 		}
 		return menuButtonWidth;
 	}
-	
-	public boolean isOnAnimateMenuButtons(){
-		boolean flag = this.isAnimateFlag();
-		for(SubMenuButton subButton : this.buttons){
-			flag |= subButton.isAnimateFlag();
+
+	public boolean isOnAnimateMenuButtons() {
+		boolean flag = animateFlag;
+		for (SubMenuButton subButton : this.buttons) {
+			flag = flag || subButton.isAnimateFlag();
 		}
 		return flag;
 	}
-	
+
 }

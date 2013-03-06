@@ -8,6 +8,11 @@
     <string name="str_last_feeding_title">Last Feeding</string>
     <string name="str_current_feeding_title">Current Feeding</string>
     <string name="str_just_now_title">just now</string>
+    
+    <string name="str_app_quit_title">Quit</string>
+    <string name="str_app_quit_confirm_title">Are you sure?</string>
+    <string name="str_positive">Yes</string>
+    <string name="str_negative">No</string>
 
     <string-array name="typeTitles">
         <item>L:Left</item>

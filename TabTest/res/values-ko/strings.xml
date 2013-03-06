@@ -8,6 +8,11 @@
     <string name="str_last_feeding_title">지난번 수유</string>
     <string name="str_current_feeding_title">수유중</string>
     <string name="str_just_now_title">방금</string>
+    
+    <string name="str_app_quit_title">종료</string>
+    <string name="str_app_quit_confirm_title">확실해요?</string>
+    <string name="str_positive">네</string>
+    <string name="str_negative">아니오</string>
 
     <string-array name="typeTitles">
         <item>L:왼쪽</item>

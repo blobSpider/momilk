@@ -4,7 +4,7 @@ import java.util.Map;
 
 import net.rubywork.feedingclock.R;
 import net.rubywork.feedingclock.model.FeedingSession;
-import net.rubywork.feedingclock.ui.support.AppContext;
+import net.rubywork.feedingclock.ui.support.ResourceUtils;
 import net.rubywork.feedingclock.ui.support.TimeFormatUtils;
 import android.content.Context;
 import android.text.format.DateUtils;
@@ -28,7 +28,7 @@ public class FeedingSessionView extends LinearLayout {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.view_feeding_session, this, true);
 
-		this.typeTitleMap = AppContext.getInstance().getTypeTitleMap();
+		this.typeTitleMap = ResourceUtils.getTypeTitleMap();
 		this.feedingGapTimeTextView = (TextView) findViewById(R.id.feedingGapTimeTextView);
 		this.feedingTimeTextView = (TextView) findViewById(R.id.feedingTimeTextView);
 		this.feedingTypeTextView = (TextView) findViewById(R.id.feedingTypeTextView);

@@ -1,6 +1,7 @@
 package net.rubywork.feedingclock.ui.view;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -12,25 +13,23 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
-//import android.util.FloatMath;
 
 public class SubMenuButton extends Button {
-	private static final int OFFSET_ANIM_START = 30;
-	private static final int DURATION_ROTATE = 200;
+	private static final int OFFSET_ANIM_START = 100;
+	private static final int DURATION_TRANS = 300;
 	private static final int DURATION_ALPHA = 200;
 	private static final int DURATION_SCALE = 200;
-
 	
 	private int width = 150;
 	private boolean animateFlag;
 	private boolean hasShown;
 	private Animation rotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
+	private Handler handler = new Handler();
 	private AnimationSet openAnimationSet = new AnimationSet(false);
 	private AnimationListener openAnimationListener = new AnimationListener() {
 		@Override
 		public void onAnimationStart(Animation animation) {
-			animateFlag = true;
 		}
 
 		@Override
@@ -39,9 +38,13 @@ public class SubMenuButton extends Button {
 
 		@Override
 		public void onAnimationEnd(Animation animation) {
-			offsetLeftAndRight((int) openOffsetX);
-			offsetTopAndBottom((int) openOffsetY);
-			animateFlag = false;
+			handler.postDelayed(new Runnable(){
+				public void run(){
+					offsetLeftAndRight((int) openOffsetX);
+					offsetTopAndBottom((int) openOffsetY);
+					animateFlag = false;
+				}
+			}, 100);
 		}
 	};
 
@@ -49,7 +52,6 @@ public class SubMenuButton extends Button {
 	private AnimationListener closeAnimationListener = new AnimationListener() {
 		@Override
 		public void onAnimationStart(Animation animation) {
-			animateFlag = true;
 		}
 
 		@Override
@@ -89,8 +91,8 @@ public class SubMenuButton extends Button {
 	}
 
 	public void initAnimation(int buttonTotalCount, int currentIndex) {
-		double xValue = width * Math.cos((double) (Math.PI * 1 / 2 * (currentIndex) / (buttonTotalCount - 1)));
-		double yValue = width * Math.sin((double) (Math.PI * 1 / 2 * (currentIndex) / (buttonTotalCount - 1)));
+		double xValue = width * Math.cos((double) (Math.PI * 0.5d * (currentIndex) / (buttonTotalCount - 1)));
+		double yValue = width * Math.sin((double) (Math.PI * 0.5d * (currentIndex) / (buttonTotalCount - 1)));
 		
 		this.openOffsetX = (float)xValue;
 		this.openOffsetY = (float)-yValue;
@@ -98,12 +100,13 @@ public class SubMenuButton extends Button {
 		this.closeOffsetY = (float)yValue;
 		int startOffset = OFFSET_ANIM_START * currentIndex;
 
-		rotateAnimation.setDuration(DURATION_ROTATE);
+		rotateAnimation.setDuration(DURATION_TRANS);
 		rotateAnimation.setRepeatCount(1);
 		rotateAnimation.setInterpolator(AnimationUtils.loadInterpolator(getContext(), android.R.anim.accelerate_interpolator));
+		rotateAnimation.setStartOffset(startOffset);
 
 		Animation openTranslateAnimation = new TranslateAnimation(0.0f, this.openOffsetX, 0.0f, this.openOffsetY);
-		openTranslateAnimation.setDuration(DURATION_ROTATE);
+		openTranslateAnimation.setDuration(DURATION_TRANS);
 		openTranslateAnimation.setInterpolator(AnimationUtils.loadInterpolator(getContext(), android.R.anim.overshoot_interpolator));
 		openTranslateAnimation.setStartOffset(startOffset);
 
@@ -113,7 +116,7 @@ public class SubMenuButton extends Button {
 		openAnimationSet.setAnimationListener(openAnimationListener);
 
 		Animation closeTranslateAnimation = new TranslateAnimation(0.0f, this.closeOffsetX, 0.0f, this.closeOffsetY);
-		closeTranslateAnimation.setDuration(DURATION_ROTATE);
+		closeTranslateAnimation.setDuration(DURATION_TRANS);
 		closeTranslateAnimation.setInterpolator(AnimationUtils.loadInterpolator(getContext(), android.R.anim.overshoot_interpolator));
 		closeTranslateAnimation.setStartOffset(startOffset);
 
@@ -142,11 +145,13 @@ public class SubMenuButton extends Button {
 	}
 
 	public void toggle() {
+		animateFlag = true;
 		startAnimation(hasShown ? closeAnimationSet : openAnimationSet);
 		this.hasShown = !this.hasShown;
 	}
 
 	public void toggle(View v) {
+		animateFlag = true;
 		startAnimation(this == v ? selectAnimationSet : hideAnimationSet);
 		this.hasShown = !this.hasShown;
 	}

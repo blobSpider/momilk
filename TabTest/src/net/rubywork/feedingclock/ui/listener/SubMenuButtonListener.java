@@ -8,6 +8,7 @@ import net.rubywork.feedingclock.R;
 import net.rubywork.feedingclock.ui.support.AppContext;
 import net.rubywork.feedingclock.ui.view.MainMenuButton;
 import net.rubywork.feedingclock.ui.view.SubMenuButton;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -29,17 +30,17 @@ public class SubMenuButtonListener implements View.OnClickListener {
 	@Override
 	public void onClick(View v) {
 		MenuViewEntry showingViewEntry = buttonViewMap.get(v);
-		View showingView = showingViewEntry.getView();
-		int showingOrder = showingViewEntry.getOrder();
-		
+		View showingView = showingViewEntry.view;
+		int showingOrder = showingViewEntry.order;
+
 		for (Iterator<Entry<SubMenuButton, MenuViewEntry>> it = buttonViewMap.entrySet().iterator(); it.hasNext();) {
 			Entry<SubMenuButton, MenuViewEntry> entry = it.next();
 			SubMenuButton subMenuButton = entry.getKey();
 			subMenuButton.toggle(v);
 			
 			MenuViewEntry hidingViewEntry = entry.getValue();
-			View hidingView = hidingViewEntry.getView();
-			int hidingOrder = hidingViewEntry.getOrder();
+			View hidingView = hidingViewEntry.view;
+			int hidingOrder = hidingViewEntry.order;
 			if(showingOrder != hidingOrder && hidingView.isShown()){
 				hidingView.startAnimation(showingOrder < hidingOrder ? outToLeftAnimation : outToRightAnimation);
 				hidingView.setVisibility(View.INVISIBLE);
@@ -53,8 +54,8 @@ public class SubMenuButtonListener implements View.OnClickListener {
 	}
 
 	public static class MenuViewEntry {
-		private int order;
-		private View view;
+		int order;
+		View view;
 		private MenuViewCallback viewCallback;
 
 		public MenuViewEntry(int order, View view) {
@@ -68,15 +69,7 @@ public class SubMenuButtonListener implements View.OnClickListener {
 			this.viewCallback = viewCallback;
 		}
 
-		private View getView() {
-			return view;
-		}
-
-		private int getOrder() {
-			return order;
-		}
-
-		private void invokeCallback() {
+		void invokeCallback() {
 			if (viewCallback != null) {
 				this.viewCallback.call();
 			}
