@@ -4,15 +4,20 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.rubywork.feedingclock.R;
+import net.rubywork.feedingclock.ui.support.AppContext;
 import net.rubywork.feedingclock.ui.view.MainMenuButton;
 import net.rubywork.feedingclock.ui.view.SubMenuButton;
-
-
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 public class SubMenuButtonListener implements View.OnClickListener {
 	private MainMenuButton mainButton;
 	private Map<SubMenuButton, MenuViewEntry> buttonViewMap;
+	
+	private Animation showAnimation = AnimationUtils.loadAnimation(AppContext.getInstance().getMainActivity(), R.anim.translate_show);
+	private Animation hideAnimation = AnimationUtils.loadAnimation(AppContext.getInstance().getMainActivity(), R.anim.translate_hide);
 
 	public SubMenuButtonListener(MainMenuButton mainButton, Map<SubMenuButton, MenuViewEntry> buttonViewMap) {
 		this.mainButton = mainButton;
@@ -23,13 +28,25 @@ public class SubMenuButtonListener implements View.OnClickListener {
 	public void onClick(View v) {
 		for (Iterator<Entry<SubMenuButton, MenuViewEntry>> it = buttonViewMap.entrySet().iterator(); it.hasNext();) {
 			Entry<SubMenuButton, MenuViewEntry> entry = it.next();
-			entry.getKey().toggle(v);
-			entry.getValue().getView().setVisibility(View.INVISIBLE);
+			
+			SubMenuButton subMenuButton = entry.getKey();
+			subMenuButton.toggle(v);
+			if(subMenuButton != v){
+				View hidingView = entry.getValue().getView();
+				if(hidingView.isShown()){
+					hidingView.startAnimation(hideAnimation);
+					hidingView.setVisibility(View.INVISIBLE);
+				}
+			}
 		}
 		mainButton.toggleTitle();
 
 		MenuViewEntry menuViewEntry = buttonViewMap.get(v);
-		menuViewEntry.getView().setVisibility(View.VISIBLE);
+		View showingView = menuViewEntry.getView();
+		if(!menuViewEntry.getView().isShown()){
+			showingView.startAnimation(showAnimation);
+			showingView.setVisibility(View.VISIBLE);
+		}
 		menuViewEntry.invokeCallback();
 	}
 
