@@ -15,64 +15,52 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 
 public class SubMenuButton extends Button {
-	private static final int OFFSET_ANIM_START = 100;
-	private static final int DURATION_TRANS = 300;
+	private static final int OFFSET_ANIM_START = 50;
+	private static final int DURATION_TRANS = 150;
 	private static final int DURATION_ALPHA = 200;
 	private static final int DURATION_SCALE = 200;
 	
 	private int width = 150;
 	private boolean animateFlag;
 	private boolean hasShown;
-	private Animation rotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+	
+	private float openOffsetX;
+	private float openOffsetY;
+	private float closeOffsetX;
+	private float closeOffsetY;
 
 	private Handler handler = new Handler();
 	private AnimationSet openAnimationSet = new AnimationSet(false);
+	private AnimationSet closeAnimationSet = new AnimationSet(false);
+	private AnimationSet hideAnimationSet = new AnimationSet(false);
+	private AnimationSet selectAnimationSet = new AnimationSet(false);
+	private Animation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
+	private Animation openRotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+	private Animation closeRotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+	
 	private AnimationListener openAnimationListener = new AnimationListener() {
-		@Override
-		public void onAnimationStart(Animation animation) {
-		}
-
-		@Override
-		public void onAnimationRepeat(Animation animation) {
-		}
-
-		@Override
-		public void onAnimationEnd(Animation animation) {
+		@Override public void onAnimationStart(Animation animation) {}
+		@Override public void onAnimationRepeat(Animation animation) {}
+		@Override public void onAnimationEnd(Animation animation) {
 			handler.postDelayed(new Runnable(){
 				public void run(){
 					offsetLeftAndRight((int) openOffsetX);
 					offsetTopAndBottom((int) openOffsetY);
 					animateFlag = false;
 				}
-			}, 100);
+			}, 50);
 		}
 	};
 
-	private AnimationSet closeAnimationSet = new AnimationSet(false);
 	private AnimationListener closeAnimationListener = new AnimationListener() {
-		@Override
-		public void onAnimationStart(Animation animation) {
-		}
-
-		@Override
-		public void onAnimationRepeat(Animation animation) {
-		}
-
-		@Override
-		public void onAnimationEnd(Animation animation) {
+		@Override public void onAnimationStart(Animation animation) {}
+		@Override public void onAnimationRepeat(Animation animation) {}
+		@Override public void onAnimationEnd(Animation animation) {
 			offsetLeftAndRight((int) closeOffsetX);
 			offsetTopAndBottom((int) closeOffsetY);
 			animateFlag = false;
 		}
 	};
-
-	private AnimationSet hideAnimationSet = new AnimationSet(false);
-	private AnimationSet selectAnimationSet = new AnimationSet(false);
-
-	private float openOffsetX;
-	private float openOffsetY;
-	private float closeOffsetX;
-	private float closeOffsetY;
 
 	public SubMenuButton(Context context) {
 		super(context);
@@ -100,48 +88,71 @@ public class SubMenuButton extends Button {
 		this.closeOffsetY = (float)yValue;
 		int startOffset = OFFSET_ANIM_START * currentIndex;
 
-		rotateAnimation.setDuration(DURATION_TRANS);
-		rotateAnimation.setRepeatCount(1);
-		rotateAnimation.setInterpolator(AnimationUtils.loadInterpolator(getContext(), android.R.anim.accelerate_interpolator));
-		rotateAnimation.setStartOffset(startOffset);
+		initRotateAnimation(startOffset);
+		initOpenAnimation(startOffset);
+		initCloseAnimation(startOffset);
+		initSelectAnimation();
+		initHideAnimation();
+	}
 
-		Animation openTranslateAnimation = new TranslateAnimation(0.0f, this.openOffsetX, 0.0f, this.openOffsetY);
-		openTranslateAnimation.setDuration(DURATION_TRANS);
-		openTranslateAnimation.setInterpolator(AnimationUtils.loadInterpolator(getContext(), android.R.anim.overshoot_interpolator));
-		openTranslateAnimation.setStartOffset(startOffset);
+	private void initHideAnimation() {
+		Animation hideScaleAnimation = new ScaleAnimation(1.0f, 0.0f, 1.0f, 0.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+		hideScaleAnimation.setDuration(DURATION_SCALE);
 
-		openAnimationSet.setFillAfter(false);
-		openAnimationSet.addAnimation(rotateAnimation);
-		openAnimationSet.addAnimation(openTranslateAnimation);
-		openAnimationSet.setAnimationListener(openAnimationListener);
+		alphaAnimation.setDuration(DURATION_ALPHA);
+		
+		hideAnimationSet.setFillAfter(false);
+		hideAnimationSet.addAnimation(hideScaleAnimation);
+		hideAnimationSet.addAnimation(alphaAnimation);
+		hideAnimationSet.setAnimationListener(closeAnimationListener);
+	}
 
+	private void initSelectAnimation() {
+		Animation selectScaleAnimation = new ScaleAnimation(1.0f, 2.5f, 1.0f, 2.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+		selectScaleAnimation.setDuration(DURATION_SCALE);
+
+		alphaAnimation.setDuration(DURATION_ALPHA);
+		
+		selectAnimationSet.setFillAfter(false);
+		selectAnimationSet.addAnimation(selectScaleAnimation);
+		selectAnimationSet.addAnimation(alphaAnimation);
+		selectAnimationSet.setAnimationListener(closeAnimationListener);
+	}
+
+	private void initCloseAnimation(int startOffset) {
 		Animation closeTranslateAnimation = new TranslateAnimation(0.0f, this.closeOffsetX, 0.0f, this.closeOffsetY);
 		closeTranslateAnimation.setDuration(DURATION_TRANS);
 		closeTranslateAnimation.setInterpolator(AnimationUtils.loadInterpolator(getContext(), android.R.anim.overshoot_interpolator));
 		closeTranslateAnimation.setStartOffset(startOffset);
 
 		closeAnimationSet.setFillAfter(false);
-		closeAnimationSet.addAnimation(rotateAnimation);
+		closeAnimationSet.addAnimation(closeRotateAnimation);
 		closeAnimationSet.addAnimation(closeTranslateAnimation);
 		closeAnimationSet.setAnimationListener(closeAnimationListener);
+	}
 
-		Animation alpha = new AlphaAnimation(1.0f, 0.0f);
-		alpha.setDuration(DURATION_ALPHA);
+	private void initOpenAnimation(int startOffset) {
+		Animation openTranslateAnimation = new TranslateAnimation(0.0f, this.openOffsetX, 0.0f, this.openOffsetY);
+		openTranslateAnimation.setDuration(DURATION_TRANS);
+		openTranslateAnimation.setInterpolator(AnimationUtils.loadInterpolator(getContext(), android.R.anim.overshoot_interpolator));
+		openTranslateAnimation.setStartOffset(startOffset);
 
-		Animation selectScaleAnimation = new ScaleAnimation(1.0f, 2.5f, 1.0f, 2.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-		selectScaleAnimation.setDuration(DURATION_SCALE);
-		Animation hideScaleAnimation = new ScaleAnimation(1.0f, 0.0f, 1.0f, 0.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-		hideScaleAnimation.setDuration(DURATION_SCALE);
+		openAnimationSet.setFillAfter(false);
+		openAnimationSet.addAnimation(openRotateAnimation);
+		openAnimationSet.addAnimation(openTranslateAnimation);
+		openAnimationSet.setAnimationListener(openAnimationListener);
+	}
 
-		selectAnimationSet.setFillAfter(false);
-		selectAnimationSet.addAnimation(selectScaleAnimation);
-		selectAnimationSet.addAnimation(alpha);
-		selectAnimationSet.setAnimationListener(closeAnimationListener);
-
-		hideAnimationSet.setFillAfter(false);
-		hideAnimationSet.addAnimation(hideScaleAnimation);
-		hideAnimationSet.addAnimation(alpha);
-		hideAnimationSet.setAnimationListener(closeAnimationListener);
+	private void initRotateAnimation(int startOffset) {
+		openRotateAnimation.setDuration(DURATION_TRANS);
+		openRotateAnimation.setRepeatCount(1);
+		openRotateAnimation.setInterpolator(AnimationUtils.loadInterpolator(getContext(), android.R.anim.accelerate_interpolator));
+		openRotateAnimation.setStartOffset(startOffset);
+		
+		closeRotateAnimation.setDuration(DURATION_TRANS);
+		closeRotateAnimation.setRepeatCount(0);
+		closeRotateAnimation.setInterpolator(AnimationUtils.loadInterpolator(getContext(), android.R.anim.accelerate_interpolator));
+		closeRotateAnimation.setStartOffset(startOffset);
 	}
 
 	public void toggle() {
