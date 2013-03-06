@@ -15,9 +15,11 @@ import android.view.animation.AnimationUtils;
 public class SubMenuButtonListener implements View.OnClickListener {
 	private MainMenuButton mainButton;
 	private Map<SubMenuButton, MenuViewEntry> buttonViewMap;
-	
-	private Animation showAnimation = AnimationUtils.loadAnimation(AppContext.getInstance().getMainActivity(), R.anim.translate_show);
-	private Animation hideAnimation = AnimationUtils.loadAnimation(AppContext.getInstance().getMainActivity(), R.anim.translate_hide);
+
+	private Animation inFromLeftAnimation = AnimationUtils.loadAnimation(AppContext.getInstance().getMainActivity(), R.anim.trans_in_from_left);
+	private Animation outToLeftAnimation = AnimationUtils.loadAnimation(AppContext.getInstance().getMainActivity(), R.anim.trans_out_to_left);
+	private Animation inFromRightAnimation = AnimationUtils.loadAnimation(AppContext.getInstance().getMainActivity(), R.anim.trans_in_from_right);
+	private Animation outToRightAnimation = AnimationUtils.loadAnimation(AppContext.getInstance().getMainActivity(), R.anim.trans_out_to_right);
 
 	public SubMenuButtonListener(MainMenuButton mainButton, Map<SubMenuButton, MenuViewEntry> buttonViewMap) {
 		this.mainButton = mainButton;
@@ -26,48 +28,55 @@ public class SubMenuButtonListener implements View.OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		MenuViewEntry showingViewEntry = buttonViewMap.get(v);
+		View showingView = showingViewEntry.getView();
+		int showingOrder = showingViewEntry.getOrder();
+		
 		for (Iterator<Entry<SubMenuButton, MenuViewEntry>> it = buttonViewMap.entrySet().iterator(); it.hasNext();) {
 			Entry<SubMenuButton, MenuViewEntry> entry = it.next();
-			
 			SubMenuButton subMenuButton = entry.getKey();
 			subMenuButton.toggle(v);
-			if(subMenuButton != v){
-				View hidingView = entry.getValue().getView();
-				if(hidingView.isShown()){
-					hidingView.startAnimation(hideAnimation);
-					hidingView.setVisibility(View.INVISIBLE);
-				}
+			
+			MenuViewEntry hidingViewEntry = entry.getValue();
+			View hidingView = hidingViewEntry.getView();
+			int hidingOrder = hidingViewEntry.getOrder();
+			if(showingOrder != hidingOrder && hidingView.isShown()){
+				hidingView.startAnimation(showingOrder < hidingOrder ? outToLeftAnimation : outToRightAnimation);
+				hidingView.setVisibility(View.INVISIBLE);
+				
+				showingView.startAnimation(showingOrder < hidingOrder ? inFromLeftAnimation : inFromRightAnimation);
+				showingView.setVisibility(View.VISIBLE);
+				showingViewEntry.invokeCallback();
 			}
 		}
 		mainButton.toggleTitle();
-
-		MenuViewEntry menuViewEntry = buttonViewMap.get(v);
-		View showingView = menuViewEntry.getView();
-		if(!menuViewEntry.getView().isShown()){
-			showingView.startAnimation(showAnimation);
-			showingView.setVisibility(View.VISIBLE);
-		}
-		menuViewEntry.invokeCallback();
 	}
 
 	public static class MenuViewEntry {
+		private int order;
 		private View view;
 		private MenuViewCallback viewCallback;
 
-		public MenuViewEntry(View view) {
+		public MenuViewEntry(int order, View view) {
+			this.order = order;
 			this.view = view;
 		}
 
-		public MenuViewEntry(View view, MenuViewCallback viewCallback) {
+		public MenuViewEntry(int order, View view, MenuViewCallback viewCallback) {
+			this.order = order;
 			this.view = view;
 			this.viewCallback = viewCallback;
 		}
 
-		public View getView() {
+		private View getView() {
 			return view;
 		}
 
-		public void invokeCallback() {
+		private int getOrder() {
+			return order;
+		}
+
+		private void invokeCallback() {
 			if (viewCallback != null) {
 				this.viewCallback.call();
 			}

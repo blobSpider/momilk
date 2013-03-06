@@ -72,7 +72,7 @@ public class MainActivity extends Activity {
 			subButtons[i].initAnimation(subButtons.length, i);
 			subButtons[i].setOnClickListener(subMenuButtonListener);
 			
-			menuButtonViewMap.put(subButtons[i], new MenuViewEntry(findViewById(CONTAINER_VIEW_IDs[i]), menuViewCallbacks[i]));
+			menuButtonViewMap.put(subButtons[i], new MenuViewEntry(i, findViewById(CONTAINER_VIEW_IDs[i]), menuViewCallbacks[i]));
 		}
 	}
 
