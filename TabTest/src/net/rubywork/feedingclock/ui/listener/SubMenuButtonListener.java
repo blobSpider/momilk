@@ -8,7 +8,6 @@ import net.rubywork.feedingclock.R;
 import net.rubywork.feedingclock.ui.support.AppContext;
 import net.rubywork.feedingclock.ui.view.MainMenuButton;
 import net.rubywork.feedingclock.ui.view.SubMenuButton;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
