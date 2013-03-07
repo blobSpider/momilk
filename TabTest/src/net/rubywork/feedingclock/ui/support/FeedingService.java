@@ -24,13 +24,13 @@ public class FeedingService {
 		AppContext appContext = AppContext.getInstance();
 		Activity activity = appContext.getMainActivity();
 		this.bottleStopButton = activity.findViewById(R.id.bottleFeedingStopButton);
-		
+
 		FeedingRecordDao feedingRecordDao = FeedingRecordDaoImpl.getInstance();
 		long elapsedTime;
 
 		if (view == bottleStopButton) {
-			elapsedTime = this.bottleStopFeeding();			
-		}else{
+			elapsedTime = this.bottleStopFeeding();
+		} else {
 			elapsedTime = this.stopFeeding();
 		}
 		String type = appContext.getCurrentType();

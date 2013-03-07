@@ -75,6 +75,6 @@ public class FeedingRecord {
 	}
 	
 	public String toString() {
-		return new StringBuilder().append(String.valueOf(getId())).append(":").append(getType()).append(":").append(getValue()).append(":").append(updatedTime).toString();
+		return new StringBuilder().append(String.valueOf(getId())).append(":").append(getSessionId()).append(":").append(getType()).append(":").append(getValue()).append(":").append(updatedTime).toString();
 	}
 }

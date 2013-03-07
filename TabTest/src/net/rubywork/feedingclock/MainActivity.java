@@ -85,7 +85,9 @@ public class MainActivity extends Activity {
 		findViewById(R.id.leftButton).setOnClickListener(new LeftButtonListener(findViewById(R.id.leftButton)));
 		findViewById(R.id.rightButton).setOnClickListener(new RightButtonListener(findViewById(R.id.rightButton)));
 		findViewById(R.id.bottleButton).setOnClickListener(new BottleButtonListener(findViewById(R.id.bottleButton)));
+		findViewById(R.id.changeButton).setOnClickListener(new ChangeButtonListener());
 
+		
 		View pauseButton = findViewById(R.id.pauseResumeButton);
 		pauseButton.setOnClickListener(new PauseButtonListener(pauseButton));
 		View stopButton = findViewById(R.id.stopButton);
@@ -93,10 +95,6 @@ public class MainActivity extends Activity {
 		stopButton.setOnTouchListener(stopButtonListener);
 		stopButton.setOnClickListener(stopButtonListener);
 
-		View changeButton = findViewById(R.id.changeButton);
-		ChangeButtonListener changeButtonListener = new ChangeButtonListener();
-		changeButton.setOnTouchListener(changeButtonListener);
-		changeButton.setOnClickListener(changeButtonListener);
 		
 		View bottlePauseButton = findViewById(R.id.bottleFeedingPauseResumeButton);
 		bottlePauseButton.setOnClickListener(new PauseButtonListener(bottlePauseButton));
