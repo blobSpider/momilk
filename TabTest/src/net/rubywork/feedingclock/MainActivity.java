@@ -3,6 +3,10 @@ package net.rubywork.feedingclock;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.rubywork.feedingclock.ui.listener.BottleButtonListener;
+import net.rubywork.feedingclock.ui.listener.BottleMeasureButtonListener;
+import net.rubywork.feedingclock.ui.listener.BottleMilkDecreaseButtonListener;
+import net.rubywork.feedingclock.ui.listener.BottleMilkIncreaseButtonListener;
 import net.rubywork.feedingclock.ui.listener.ChangeButtonListener;
 import net.rubywork.feedingclock.ui.listener.HistoryMenuViewCallback;
 import net.rubywork.feedingclock.ui.listener.LeftButtonListener;
@@ -78,9 +82,9 @@ public class MainActivity extends Activity {
 	}
 
 	private void initListeners() {
-		findViewById(R.id.leftButton).setOnClickListener(new LeftButtonListener());
-		findViewById(R.id.rightButton).setOnClickListener(new RightButtonListener());
-		// new BottleButtonOnClickListener(this);
+		findViewById(R.id.leftButton).setOnClickListener(new LeftButtonListener(findViewById(R.id.leftButton)));
+		findViewById(R.id.rightButton).setOnClickListener(new RightButtonListener(findViewById(R.id.rightButton)));
+		findViewById(R.id.bottleButton).setOnClickListener(new BottleButtonListener(findViewById(R.id.bottleButton)));
 
 		View pauseButton = findViewById(R.id.pauseResumeButton);
 		pauseButton.setOnClickListener(new PauseButtonListener(pauseButton));
@@ -93,8 +97,25 @@ public class MainActivity extends Activity {
 		ChangeButtonListener changeButtonListener = new ChangeButtonListener();
 		changeButton.setOnTouchListener(changeButtonListener);
 		changeButton.setOnClickListener(changeButtonListener);
-
+		
+		View bottlePauseButton = findViewById(R.id.bottleFeedingPauseResumeButton);
+		bottlePauseButton.setOnClickListener(new PauseButtonListener(bottlePauseButton));
+		View bottleStopButton = findViewById(R.id.bottleFeedingStopButton);
+		bottleStopButton.setOnTouchListener(stopButtonListener);
+		bottleStopButton.setOnClickListener(stopButtonListener);		
+		
+		View bottleMeasureButton = findViewById(R.id.bottleMeasureButton);
+		bottleMeasureButton.setOnClickListener(new BottleMeasureButtonListener(bottleMeasureButton));
+		
+		View bottleMilkIncreaseButton = findViewById(R.id.milkIncreaseButton);
+		bottleMilkIncreaseButton.setOnClickListener(new BottleMilkIncreaseButtonListener());
+		
+		View bottleMilkDecreaseButton = findViewById(R.id.milkDecreaseButton);
+		bottleMilkDecreaseButton.setOnClickListener(new BottleMilkDecreaseButtonListener());
+		
 		findViewById(R.id.play).setOnClickListener(new MusicButtonListener());
+		
+		
 	}
 
 	@Override

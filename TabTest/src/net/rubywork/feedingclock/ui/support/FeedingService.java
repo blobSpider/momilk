@@ -1,13 +1,17 @@
 package net.rubywork.feedingclock.ui.support;
 
+import net.rubywork.feedingclock.R;
 import net.rubywork.feedingclock.dao.FeedingRecordDao;
 import net.rubywork.feedingclock.dao.impl.FeedingRecordDaoImpl;
 import net.rubywork.feedingclock.model.FeedingRecord;
+import android.app.Activity;
 import android.os.SystemClock;
+import android.view.View;
 import android.widget.Chronometer;
 
 public class FeedingService {
 	private static final FeedingService instance = new FeedingService();
+	private View bottleStopButton;
 
 	private FeedingService() {
 	}
@@ -16,11 +20,19 @@ public class FeedingService {
 		return instance;
 	}
 
-	public void saveCurrentFeedingRecord() {
+	public void saveCurrentFeedingRecord(View view) {
 		AppContext appContext = AppContext.getInstance();
+		Activity activity = appContext.getMainActivity();
+		this.bottleStopButton = activity.findViewById(R.id.bottleFeedingStopButton);
+		
 		FeedingRecordDao feedingRecordDao = FeedingRecordDaoImpl.getInstance();
+		long elapsedTime;
 
-		long elapsedTime = this.stopFeeding();
+		if (view == bottleStopButton) {
+			elapsedTime = this.bottleStopFeeding();			
+		}else{
+			elapsedTime = this.stopFeeding();
+		}
 		String type = appContext.getCurrentType();
 
 		Long currentSessionId = appContext.getCurrentSessionId();
@@ -59,6 +71,32 @@ public class FeedingService {
 
 	public long stopFeeding() {
 		Chronometer chronometer = AppContext.getInstance().getChronometer();
+		chronometer.stop();
+		return SystemClock.elapsedRealtime() - chronometer.getBase();
+	}
+
+	public void bottleStartFeeding() {
+		Chronometer chronometer = AppContext.getInstance().getBottleChronometer();
+		chronometer.setBase(SystemClock.elapsedRealtime());
+		chronometer.start();
+	}
+
+	public void bottlePauseFeeding() {
+		AppContext appContext = AppContext.getInstance();
+		Chronometer chronometer = appContext.getBottleChronometer();
+		chronometer.stop();
+		appContext.setPausedTime(System.currentTimeMillis());
+	}
+
+	public void bottleResumeFeeding() {
+		AppContext appContext = AppContext.getInstance();
+		Chronometer chronometer = appContext.getBottleChronometer();
+		chronometer.setBase(chronometer.getBase() + (System.currentTimeMillis() - appContext.getPausedTime()));
+		chronometer.start();
+	}
+
+	public long bottleStopFeeding() {
+		Chronometer chronometer = AppContext.getInstance().getBottleChronometer();
 		chronometer.stop();
 		return SystemClock.elapsedRealtime() - chronometer.getBase();
 	}

@@ -6,47 +6,35 @@ import net.rubywork.feedingclock.ui.anim.SelectionAnimationEndAdapter.AnimatioEn
 import net.rubywork.feedingclock.ui.anim.SelectionAnimationSet;
 import net.rubywork.feedingclock.ui.support.AppContext;
 import net.rubywork.feedingclock.ui.support.FeedingService;
-import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationSet;
 
-public class PauseButtonListener implements OnClickListener {
+public class BottleMeasureButtonListener implements OnClickListener {
 	private AppContext appContext;
 	private FeedingService feedingService = FeedingService.getInstance();
 	private AnimationSet selectionAnimation = new SelectionAnimationSet(false);
-	private View pauseButton;
 
-	public PauseButtonListener(View view) {
+	public BottleMeasureButtonListener(View view) {
 		this.appContext = AppContext.getInstance();
-		Activity activity = appContext.getMainActivity();
-		this.pauseButton = activity.findViewById(R.id.pauseResumeButton);
 		selectionAnimation.setAnimationListener(new SelectionAnimationEndAdapter(view, new AnimatioEndCallback() {
 			@Override
 			public void call(View view) {
-				view.setBackgroundResource(appContext.isPause() ? R.drawable.button_resume : R.drawable.button_pause);
+				view.setBackgroundResource(appContext.isMlMeasure() ? R.drawable.oz : R.drawable.ml);
 			}
 		}));
 	}
 
 	public void onClick(View view) {
-		if (view == pauseButton) {
-			if (appContext.isPause()) {
-				feedingService.resumeFeeding();
-				appContext.setPause(false);
-			} else {
-				feedingService.pauseFeeding();
-				appContext.setPause(true);
-			}
-		}else{
-			if (appContext.isPause()) {
-				feedingService.bottleResumeFeeding();
-				appContext.setPause(false);
-			} else {
-				feedingService.bottlePauseFeeding();
-				appContext.setPause(true);
-			}
+		if (appContext.isMlMeasure()) {
+//			feedingService.resumeFeeding();
+			appContext.setMlMeasure(false);
+		} else {
+//			feedingService.pauseFeeding();
+			appContext.setMlMeasure(true);
 		}
+		
 		view.startAnimation(selectionAnimation);
 	}
 }

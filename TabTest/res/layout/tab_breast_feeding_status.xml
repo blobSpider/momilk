@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <net.rubywork.feedingclock.ui.view.FeedingMainView
-        android:id="@+id/feedingMainView"
+    <LinearLayout
+        android:id="@+id/breastFeedingStatusView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:visibility="invisible" >
 
         <LinearLayout
-            android:id="@+id/lastFeedingInfoView"
+            android:id="@+id/currentFeedingInfoView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/layout_last_feeding_info_view"
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/lastFeedingTitleView"
+                android:id="@+id/currentFeedingTitleView"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:background="@drawable/layout_last_feeding_title_view"
                 android:gravity="left|center"
-                android:text="@string/str_last_feeding_title"
+                android:text="@string/str_current_feeding_title"
                 android:textColor="#000000"
                 android:textSize="20sp" />
 
@@ -29,47 +30,65 @@
                 android:layout_height="80dp"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:id="@+id/agoTimeView"
+                <ImageView
+                    android:id="@+id/leftImageView"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="left|center"
-                    android:textColor="#000000"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
+                    android:contentDescription="Left"
+                    android:src="@drawable/button_left" />
 
-                <TextView
-                    android:id="@+id/feedingTypeView"
+                <Chronometer
+                    android:id="@+id/chronometer"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:textColor="#D2691E"
+                    android:textSize="50sp" />
+
+                <ImageView
+                    android:id="@+id/rightImageView"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="right|center"
-                    android:textColor="#000000"
-                    android:textSize="50sp"
-                    android:textStyle="bold" />
+                    android:contentDescription="Right"
+                    android:src="@drawable/button_right" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="30dp"
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:id="@+id/lastTimeView"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:gravity="left|center"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/durationView"
+                    android:id="@+id/currentTimeView"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
+                    android:gravity="left|center"
+                    android:textColor="#000000"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/totalView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:gravity="right|center"
+                    android:textColor="#000000"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center"
                     android:textColor="#000000"
                     android:textSize="25sp" />
             </LinearLayout>
@@ -78,40 +97,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp" >
+            android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/leftButton"
+                android:id="@+id/pauseResumeButton"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@drawable/button_left" />
+                android:background="@drawable/button_pause" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="match_parent" />
 
             <Button
-                android:id="@+id/rightButton"
+                android:id="@+id/stopButton"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@drawable/button_right" />
+                android:background="@drawable/button_stop" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp" >
+            android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/bottleButton"
+                android:id="@+id/changeButton"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@drawable/button_bottle" />
+                android:background="@drawable/button_change" />
         </LinearLayout>
-    </net.rubywork.feedingclock.ui.view.FeedingMainView>
+    </LinearLayout>
 
 </merge>

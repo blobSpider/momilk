@@ -16,6 +16,7 @@ public class AppContext {
 	private Long currentSessionId;
 	private boolean pause;
 	private long pausedTime;
+	private boolean mlMeasure;
 	
 	public Activity getMainActivity() {
 		return mainActivity;
@@ -50,6 +51,14 @@ public class AppContext {
 		this.pause = pause;
 	}
 
+	public boolean isMlMeasure() {
+		return mlMeasure;
+	}
+
+	public void setMlMeasure(boolean mlMeasure) {
+		this.mlMeasure = mlMeasure;
+	}
+
 	public Long getCurrentSessionId() {
 		return currentSessionId;
 	}
@@ -60,6 +69,10 @@ public class AppContext {
 
 	public Chronometer getChronometer() {
 		return (Chronometer) mainActivity.findViewById(R.id.chronometer);
+	}
+
+	public Chronometer getBottleChronometer() {
+		return (Chronometer) mainActivity.findViewById(R.id.bottleChronometer);
 	}
 
 	public long getPausedTime() {

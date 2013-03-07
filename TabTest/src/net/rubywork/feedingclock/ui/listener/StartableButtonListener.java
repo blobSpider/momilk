@@ -14,26 +14,37 @@ import android.view.animation.AnimationSet;
 public abstract class StartableButtonListener implements OnClickListener {
 	protected AppContext appContext;
 	protected View feedingMainView;
-	protected View feedingStatusView;
+	protected View breastFeedingStatusView;
+	protected View bottleFeedingStatusView;
 	protected View leftImageView;
 	protected View rightImageView;
-	
+	protected View bottleButton;
+
 	private FeedingService feedingService = FeedingService.getInstance();
 	private AnimationSet selectionAnimation = new SelectionAnimationSet(false);
 
-	public StartableButtonListener() {
+	public StartableButtonListener(View view) {
 		this.appContext = AppContext.getInstance();
 		Activity activity = appContext.getMainActivity();
 		this.feedingMainView = activity.findViewById(R.id.feedingMainView);
-		this.feedingStatusView = activity.findViewById(R.id.feedingStatusView);
+		this.breastFeedingStatusView = activity.findViewById(R.id.breastFeedingStatusView);
+		this.bottleFeedingStatusView = activity.findViewById(R.id.bottleFeedingStatusView);
+		this.bottleButton = activity.findViewById(R.id.bottleButton);
 		this.leftImageView = activity.findViewById(R.id.leftImageView);
 		this.rightImageView = activity.findViewById(R.id.rightImageView);
 
-		selectionAnimation.setAnimationListener(new SelectionAnimationEndAdapter(new AnimatioEndCallback() {
+		selectionAnimation.setAnimationListener(new SelectionAnimationEndAdapter(view, new AnimatioEndCallback() {
 			@Override
 			public void call(View view) {
-				feedingStatusView.setVisibility(View.VISIBLE);
-				feedingMainView.setVisibility(View.INVISIBLE);
+				if (view == bottleButton) {
+					bottleFeedingStatusView.setVisibility(View.VISIBLE);
+					breastFeedingStatusView.setVisibility(View.INVISIBLE);
+					feedingMainView.setVisibility(View.INVISIBLE);
+				}else{
+					breastFeedingStatusView.setVisibility(View.VISIBLE);
+					bottleFeedingStatusView.setVisibility(View.INVISIBLE);
+					feedingMainView.setVisibility(View.INVISIBLE);
+				}
 			}
 		}));
 	}
@@ -41,8 +52,12 @@ public abstract class StartableButtonListener implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 		view.startAnimation(selectionAnimation);
-		
-		feedingService.startFeeding();
+
+		if(view == bottleButton){
+			feedingService.bottleStartFeeding();
+		}else{
+			feedingService.startFeeding();	
+		}		
 		appContext.setCurrentType(getCurrentType());
 		appContext.setCurrentSessionId(0l);
 

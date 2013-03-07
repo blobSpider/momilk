@@ -65,7 +65,7 @@ public class ChangeButtonListener implements OnTouchListener, OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		feedingService.saveCurrentFeedingRecord();
+		feedingService.saveCurrentFeedingRecord(v);
 		feedingService.startFeeding();
 		
 		appContext.setPause(false);

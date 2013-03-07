@@ -16,7 +16,8 @@ import android.view.animation.AnimationSet;
 public class StopButtonListener implements OnClickListener, OnTouchListener {
 	private AppContext appContext;
 	private View feedingMainView;
-	private View feedingStatusView;
+	private View breastFeedingStatusView;
+	private View bottleFeedingStatusView;
 	private View pauseResumeButton;
 
 	private FeedingService feedingService = FeedingService.getInstance();
@@ -26,21 +27,23 @@ public class StopButtonListener implements OnClickListener, OnTouchListener {
 		this.appContext = AppContext.getInstance();
 		Activity activity = appContext.getMainActivity();
 		this.feedingMainView = activity.findViewById(R.id.feedingMainView);
-		this.feedingStatusView = activity.findViewById(R.id.feedingStatusView);
+		this.breastFeedingStatusView = activity.findViewById(R.id.breastFeedingStatusView);
+		this.bottleFeedingStatusView = activity.findViewById(R.id.bottleFeedingStatusView);
 		this.pauseResumeButton = activity.findViewById(R.id.pauseResumeButton);
 
 		selectionAnimation.setAnimationListener(new SelectionAnimationEndAdapter(new AnimatioEndCallback() {
 			@Override
 			public void call(View view) {
 				feedingMainView.setVisibility(View.VISIBLE);
-				feedingStatusView.setVisibility(View.INVISIBLE);
+				breastFeedingStatusView.setVisibility(View.INVISIBLE);
+				bottleFeedingStatusView.setVisibility(View.INVISIBLE);
 			}
 		}));
 	}
 
 	@Override
 	public void onClick(View view) {
-		feedingService.saveCurrentFeedingRecord();
+		feedingService.saveCurrentFeedingRecord(view);
 		appContext.setPause(false);
 		pauseResumeButton.setBackgroundResource(R.drawable.button_pause);
 	}
