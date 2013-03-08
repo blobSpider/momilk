@@ -10,12 +10,15 @@ import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationSet;
+import android.widget.TextView;
 
 public abstract class StartableButtonListener implements OnClickListener {
 	protected AppContext appContext;
 	protected View feedingMainView;
 	protected View breastFeedingStatusView;
 	protected View bottleFeedingStatusView;
+	protected TextView milkAmountTextView;
+	protected View bottleMeasureButton;
 	protected View leftImageView;
 	protected View rightImageView;
 	protected View bottleButton;
@@ -30,6 +33,8 @@ public abstract class StartableButtonListener implements OnClickListener {
 		this.breastFeedingStatusView = activity.findViewById(R.id.breastFeedingStatusView);
 		this.bottleFeedingStatusView = activity.findViewById(R.id.bottleFeedingStatusView);
 		this.bottleButton = activity.findViewById(R.id.bottleButton);
+		this.milkAmountTextView = (TextView) activity.findViewById(R.id.bottleAmountTextView);
+		this.bottleMeasureButton = (TextView) activity.findViewById(R.id.bottleMeasureButton);
 		this.leftImageView = activity.findViewById(R.id.leftImageView);
 		this.rightImageView = activity.findViewById(R.id.rightImageView);
 
@@ -56,7 +61,7 @@ public abstract class StartableButtonListener implements OnClickListener {
 		if(view == bottleButton){
 			feedingService.bottleStartFeeding();
 		}else{
-			feedingService.startFeeding();	
+			feedingService.startFeeding();
 		}		
 		appContext.setCurrentType(getCurrentType());
 		appContext.setCurrentSessionId(0l);

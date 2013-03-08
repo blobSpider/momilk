@@ -9,7 +9,6 @@ import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationSet;
-import android.widget.Button;
 import android.widget.TextView;
 
 public class BottleMeasureButtonListener implements OnClickListener {
@@ -25,17 +24,17 @@ public class BottleMeasureButtonListener implements OnClickListener {
 		selectionAnimation.setAnimationListener(new SelectionAnimationEndAdapter(view, new AnimatioEndCallback() {
 			@Override
 			public void call(View view) {
-				view.setBackgroundResource(appContext.isMlMeasure() ? R.drawable.oz : R.drawable.ml);
+				view.setBackgroundResource(appContext.isMlMeasure() ? R.drawable.ml : R.drawable.oz);
 			}
 		}));
 	}
 
 	public void onClick(View view) {
 		if (appContext.isMlMeasure()) {
-			this.milkAmountTextView.setText("70");
+			this.milkAmountTextView.setText("2");
 			appContext.setMlMeasure(false);
 		} else {
-			this.milkAmountTextView.setText("2");
+			this.milkAmountTextView.setText("70");
 			appContext.setMlMeasure(true);
 		}
 		

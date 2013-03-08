@@ -23,6 +23,7 @@ public class FeedingSession {
 	private Long sessionId;
 	private List<FeedingRecord> records;
 	private String type;
+	private String unit;
 	private long value;
 	private Date updatedTime;
 
@@ -43,6 +44,7 @@ public class FeedingSession {
 			if (!it.hasNext()) { // is last record ?
 				this.sessionId = record.getSessionId();
 				this.type = TYPE_MAP.get(typeSet.toString());
+				this.unit = record.getUnit();
 				this.value = sum;
 				this.updatedTime = record.getUpdatedTime();
 			}
@@ -71,6 +73,14 @@ public class FeedingSession {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 
 	public long getValue() {

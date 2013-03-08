@@ -24,7 +24,7 @@ public class LastFeedingRecordThread extends Thread {
 	private TextView agoTimeView;
 	private TextView feedingTypeView;
 	private TextView lastTimeView;
-	private TextView durationView;
+	private TextView measureValueView;
 	private Map<String, String> typeTitleMap;
 
 	public void run() {
@@ -46,7 +46,7 @@ public class LastFeedingRecordThread extends Thread {
 		this.agoTimeView = (TextView) activity.findViewById(R.id.agoTimeView);
 		this.feedingTypeView = (TextView) activity.findViewById(R.id.feedingTypeView);
 		this.lastTimeView = (TextView) activity.findViewById(R.id.lastTimeView);
-		this.durationView = (TextView) activity.findViewById(R.id.durationView);
+		this.measureValueView = (TextView) activity.findViewById(R.id.measureValueView);
 
 		runnable = new Runnable() {
 			public void run() {
@@ -81,9 +81,15 @@ public class LastFeedingRecordThread extends Thread {
 				agoTimeText = TimeFormatUtils.formatAgoTime(lastRecord.getAgoTimeMillis());
 			}
 
+			String type = lastRecord.getType();
+			
 			agoTimeView.setText(agoTimeText);
-			durationView.setText(TimeFormatUtils.formatDurationTime(lastRecord.getValue()));
-			feedingTypeView.setText(this.typeTitleMap.get(lastRecord.getType()));
+			if("B".equals(type)){
+				measureValueView.setText(lastRecord.getValue() + lastRecord.getUnit());
+			}else{
+				measureValueView.setText(TimeFormatUtils.formatDurationTime(lastRecord.getValue()));
+			}
+			feedingTypeView.setText(this.typeTitleMap.get(type));
 			lastTimeView.setText(DateUtils.formatDateTime(activity, lastRecord.getUpdatedTimeMillis(), dateTimeFormat));
 		}
 	}

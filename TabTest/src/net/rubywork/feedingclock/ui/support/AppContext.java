@@ -7,8 +7,13 @@ import android.widget.Chronometer;
 
 public class AppContext {
 	private static final AppContext instance = new AppContext();
-	private AppContext() {}
-	public static AppContext getInstance() {return instance;}
+
+	private AppContext() {
+	}
+
+	public static AppContext getInstance() {
+		return instance;
+	}
 
 	private Activity mainActivity;
 	private LastFeedingRecordThread lastFeedingRecordThread;
@@ -16,8 +21,9 @@ public class AppContext {
 	private Long currentSessionId;
 	private boolean pause;
 	private long pausedTime;
+	private float bottleAmount;
 	private boolean mlMeasure;
-	
+
 	public Activity getMainActivity() {
 		return mainActivity;
 	}
@@ -86,4 +92,13 @@ public class AppContext {
 	public Resources getResources() {
 		return mainActivity.getResources();
 	}
+
+	public float getBottleAmount() {
+		return bottleAmount;
+	}
+
+	public void setBottleAmount(float bottleAmount) {
+		this.bottleAmount = bottleAmount;
+	}
+
 }

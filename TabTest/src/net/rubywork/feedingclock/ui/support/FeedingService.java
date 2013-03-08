@@ -26,25 +26,27 @@ public class FeedingService {
 		this.bottleStopButton = activity.findViewById(R.id.bottleFeedingStopButton);
 
 		FeedingRecordDao feedingRecordDao = FeedingRecordDaoImpl.getInstance();
-		long elapsedTime;
+		long measureValue;
 
 		if (view == bottleStopButton) {
-			elapsedTime = this.bottleStopFeeding();
+			this.bottleStopFeeding();
+			measureValue = (long) appContext.getBottleAmount();
 		} else {
-			elapsedTime = this.stopFeeding();
+			measureValue = this.stopFeeding();
 		}
 		String type = appContext.getCurrentType();
-
+		String unit = appContext.isMlMeasure() ? "ml" : "oz";
+		
 		Long currentSessionId = appContext.getCurrentSessionId();
 		if (currentSessionId == null || currentSessionId == 0) {
-			FeedingRecord feedingRecord = new FeedingRecord(type, elapsedTime);
+			FeedingRecord feedingRecord = new FeedingRecord(type, measureValue, unit);
 			Long pkId = feedingRecordDao.save(feedingRecord);
 			appContext.setCurrentSessionId(pkId);
 			feedingRecord.setId(pkId);
 			feedingRecord.setSessionId(pkId);
 			feedingRecordDao.save(feedingRecord);
 		} else {
-			FeedingRecord feedingRecord = new FeedingRecord(currentSessionId, type, elapsedTime);
+			FeedingRecord feedingRecord = new FeedingRecord(currentSessionId, type, measureValue, unit);
 			feedingRecordDao.save(feedingRecord);
 		}
 	}

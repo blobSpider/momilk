@@ -82,38 +82,40 @@ public class MainActivity extends Activity {
 	}
 
 	private void initListeners() {
-		findViewById(R.id.leftButton).setOnClickListener(new LeftButtonListener(findViewById(R.id.leftButton)));
-		findViewById(R.id.rightButton).setOnClickListener(new RightButtonListener(findViewById(R.id.rightButton)));
-		findViewById(R.id.bottleButton).setOnClickListener(new BottleButtonListener(findViewById(R.id.bottleButton)));
-		findViewById(R.id.changeButton).setOnClickListener(new ChangeButtonListener());
-
+		View leftButton = findViewById(R.id.leftButton);
+		leftButton.setOnClickListener(new LeftButtonListener(leftButton));
+		
+		View rightbutton = findViewById(R.id.rightButton);
+		rightbutton.setOnClickListener(new RightButtonListener(rightbutton));
+		
+		View bottleButton = findViewById(R.id.bottleButton);
+		bottleButton.setOnClickListener(new BottleButtonListener(bottleButton));
+		
+		View changeButton = findViewById(R.id.changeButton);
+		changeButton.setOnClickListener(new ChangeButtonListener());
+		
+		View stopButton = findViewById(R.id.stopButton);
+		stopButton.setOnClickListener(new StopButtonListener());
+		
+		View milkIncButton = findViewById(R.id.milkIncreaseButton);
+		milkIncButton.setOnClickListener(new BottleMilkIncreaseButtonListener());
+		
+		View milkDescButton = findViewById(R.id.milkDecreaseButton);
+		milkDescButton.setOnClickListener(new BottleMilkDecreaseButtonListener());
 		
 		View pauseButton = findViewById(R.id.pauseResumeButton);
 		pauseButton.setOnClickListener(new PauseButtonListener(pauseButton));
-		View stopButton = findViewById(R.id.stopButton);
-		StopButtonListener stopButtonListener = new StopButtonListener();
-		stopButton.setOnTouchListener(stopButtonListener);
-		stopButton.setOnClickListener(stopButtonListener);
-
 		
 		View bottlePauseButton = findViewById(R.id.bottleFeedingPauseResumeButton);
 		bottlePauseButton.setOnClickListener(new PauseButtonListener(bottlePauseButton));
+		
 		View bottleStopButton = findViewById(R.id.bottleFeedingStopButton);
-		bottleStopButton.setOnTouchListener(stopButtonListener);
-		bottleStopButton.setOnClickListener(stopButtonListener);		
+		bottleStopButton.setOnClickListener(new StopButtonListener());
 		
 		View bottleMeasureButton = findViewById(R.id.bottleMeasureButton);
 		bottleMeasureButton.setOnClickListener(new BottleMeasureButtonListener(bottleMeasureButton));
 		
-		View bottleMilkIncreaseButton = findViewById(R.id.milkIncreaseButton);
-		bottleMilkIncreaseButton.setOnClickListener(new BottleMilkIncreaseButtonListener());
-		
-		View bottleMilkDecreaseButton = findViewById(R.id.milkDecreaseButton);
-		bottleMilkDecreaseButton.setOnClickListener(new BottleMilkDecreaseButtonListener());
-		
 		findViewById(R.id.play).setOnClickListener(new MusicButtonListener());
-		
-		
 	}
 
 	@Override

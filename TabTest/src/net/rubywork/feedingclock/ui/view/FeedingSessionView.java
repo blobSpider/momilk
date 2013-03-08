@@ -41,8 +41,12 @@ public class FeedingSessionView extends LinearLayout {
 		this.feedingGapTimeTextView.setText(prevRecord == null ? "" : TimeFormatUtils.formatGapTime(currentUpdateTime - prevRecord.getUpdatedTimeMillis()));
 		this.feedingTimeTextView.setText(DateUtils.formatDateTime(context, currentUpdateTime, dateTimeFormat));
 		this.feedingTypeTextView.setText(this.typeTitleMap.get(currentRecord.getType()));
-		this.feedingValueTextView.setText(TimeFormatUtils.formatDurationTime(currentRecord.getValue()));
-
+		
+		if("B".equals(currentRecord.getType())){
+			this.feedingValueTextView.setText(currentRecord.getValue() + currentRecord.getUnit());
+		}else{
+			this.feedingValueTextView.setText(TimeFormatUtils.formatDurationTime(currentRecord.getValue()));
+		}
 	}
 
 }

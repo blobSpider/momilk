@@ -65,7 +65,7 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/durationView"
+                    android:id="@+id/measureValueView"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"

@@ -7,17 +7,17 @@ import net.rubywork.feedingclock.ui.anim.SelectionAnimationSet;
 import net.rubywork.feedingclock.ui.support.AppContext;
 import net.rubywork.feedingclock.ui.support.FeedingService;
 import android.app.Activity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.animation.AnimationSet;
+import android.widget.TextView;
 
-public class StopButtonListener implements OnClickListener, OnTouchListener {
+public class StopButtonListener implements OnClickListener {
 	private AppContext appContext;
 	private View feedingMainView;
 	private View breastFeedingStatusView;
 	private View bottleFeedingStatusView;
+	private TextView bottleAmountTextView;
 	private View pauseResumeButton;
 
 	private FeedingService feedingService = FeedingService.getInstance();
@@ -29,6 +29,7 @@ public class StopButtonListener implements OnClickListener, OnTouchListener {
 		this.feedingMainView = activity.findViewById(R.id.feedingMainView);
 		this.breastFeedingStatusView = activity.findViewById(R.id.breastFeedingStatusView);
 		this.bottleFeedingStatusView = activity.findViewById(R.id.bottleFeedingStatusView);
+		this.bottleAmountTextView = (TextView) activity.findViewById(R.id.bottleAmountTextView);
 		this.pauseResumeButton = activity.findViewById(R.id.pauseResumeButton);
 
 		selectionAnimation.setAnimationListener(new SelectionAnimationEndAdapter(new AnimatioEndCallback() {
@@ -43,16 +44,10 @@ public class StopButtonListener implements OnClickListener, OnTouchListener {
 
 	@Override
 	public void onClick(View view) {
+		appContext.setBottleAmount(Float.parseFloat(bottleAmountTextView.getText().toString()));
 		feedingService.saveCurrentFeedingRecord(view);
 		appContext.setPause(false);
 		pauseResumeButton.setBackgroundResource(R.drawable.button_pause);
-	}
-
-	@Override
-	public boolean onTouch(View view, MotionEvent event) {
-		if(event.getAction() == MotionEvent.ACTION_DOWN){
-			view.startAnimation(selectionAnimation);
-		}
-		return false;
+		view.startAnimation(selectionAnimation);
 	}
 }

@@ -17,14 +17,15 @@ public class PauseButtonListener implements OnClickListener {
 	private AnimationSet selectionAnimation = new SelectionAnimationSet(false);
 	private View pauseButton;
 
-	public PauseButtonListener(View view) {
+	public PauseButtonListener(final View pauseButton) {
 		this.appContext = AppContext.getInstance();
 		Activity activity = appContext.getMainActivity();
 		this.pauseButton = activity.findViewById(R.id.pauseResumeButton);
-		selectionAnimation.setAnimationListener(new SelectionAnimationEndAdapter(view, new AnimatioEndCallback() {
+		
+		selectionAnimation.setAnimationListener(new SelectionAnimationEndAdapter(new AnimatioEndCallback() {
 			@Override
-			public void call(View view) {
-				view.setBackgroundResource(appContext.isPause() ? R.drawable.button_resume : R.drawable.button_pause);
+			public void call(View v) {
+				pauseButton.setBackgroundResource(appContext.isPause() ? R.drawable.button_resume : R.drawable.button_pause);
 			}
 		}));
 	}

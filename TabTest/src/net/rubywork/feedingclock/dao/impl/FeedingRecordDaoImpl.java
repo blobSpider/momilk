@@ -37,6 +37,7 @@ public class FeedingRecordDaoImpl extends GenericDaoImpl<FeedingRecord, Long> im
 		record.setId(cursor.getLong(cursor.getColumnIndex(columnId)));
 		record.setSessionId(cursor.getLong(cursor.getColumnIndex(columnSessionId)));
 		record.setType(cursor.getString(cursor.getColumnIndex(columnType)));
+		record.setUnit(cursor.getString(cursor.getColumnIndex(columnUnit)));
 		record.setValue(cursor.getLong(cursor.getColumnIndex(columnValue)));
 		record.setUpdatedTime(new Date(cursor.getLong(cursor.getColumnIndex(columnUpdatedTime))));
 		return record;
@@ -56,6 +57,7 @@ public class FeedingRecordDaoImpl extends GenericDaoImpl<FeedingRecord, Long> im
 	protected ContentValues getContentValues(FeedingRecord record) {
 		ContentValues recordValues = new ContentValues();
 		recordValues.put(columnType, record.getType());
+		recordValues.put(columnUnit, record.getUnit());
 		recordValues.put(columnValue, record.getValue());
 		recordValues.put(columnUpdatedTime, System.currentTimeMillis());
 		

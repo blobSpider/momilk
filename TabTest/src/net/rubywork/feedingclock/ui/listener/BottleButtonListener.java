@@ -1,5 +1,6 @@
 package net.rubywork.feedingclock.ui.listener;
 
+import net.rubywork.feedingclock.R;
 import android.view.View;
 
 public class BottleButtonListener extends StartableButtonListener {
@@ -16,8 +17,10 @@ public class BottleButtonListener extends StartableButtonListener {
 
 	@Override
 	protected void setVisibilityImageView() {
-		// TODO Auto-generated method stub
+		appContext.setMlMeasure(true);
+		milkAmountTextView.setText("70");
 		
+		bottleMeasureButton.setBackgroundResource(appContext.isMlMeasure() ? R.drawable.ml : R.drawable.oz);
 	}
 	
 }
