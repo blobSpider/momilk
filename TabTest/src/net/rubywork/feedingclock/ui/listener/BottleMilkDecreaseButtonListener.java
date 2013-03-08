@@ -23,9 +23,18 @@ public class BottleMilkDecreaseButtonListener implements OnClickListener {
 
 	@Override
 	public void onClick(View view) {
-		int minus = Integer.parseInt(milkAmountTextView.getText().toString());
-		int decrease = minus - 10;
-		this.milkAmountTextView.setText(Integer.toString(decrease));
+		float minus = Float.parseFloat(milkAmountTextView.getText().toString());
+		float increase;
+
+		if (minus > 0) {
+			if (appContext.isMlMeasure()) {
+				increase = (float) (minus - 0.5);
+				this.milkAmountTextView.setText(Float.toString(increase));
+			} else {
+				increase = (int) (minus - 10);
+				this.milkAmountTextView.setText(Integer.toString((int) increase));
+			}
+		}
 
 		view.startAnimation(selectionAnimation);
 
